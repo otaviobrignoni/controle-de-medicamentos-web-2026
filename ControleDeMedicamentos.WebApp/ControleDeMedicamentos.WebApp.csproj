@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modulo Fornecedor\" />
     <Folder Include="Modulo Fornecedor\Aplicacao\" />
     <Folder Include="Modulo Fornecedor\Apresentacao\" />
     <Folder Include="Modulo Fornecedor\Apresentacao\Views\" />
