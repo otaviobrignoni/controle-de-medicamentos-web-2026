@@ -1,3 +1,7 @@
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Infra;
+
 namespace ControleDeMedicamentos.WebApp.Compartilhado;
 
 public static class InjecaoDependencia
@@ -36,11 +40,13 @@ public static class InjecaoDependencia
             return contextoJson;
         });
         //services.AddScoped<IRepositorio(*), Repositorio(*)>();
+        services.AddScoped<IRepositorioFornecedor, RepositorioFornecedor>();
     }
 
     // Camada de Aplicação
     public static void AddServicesConfig(this IServiceCollection services)
     {
         //services.AddScoped<Servico(*)>();
+        services.AddScoped<ServicoFornecedores>();
     }
 }
