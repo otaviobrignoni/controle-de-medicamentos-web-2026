@@ -1,4 +1,3 @@
-
 using System.ComponentModel.DataAnnotations;
 
 namespace ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Apresentacao;
