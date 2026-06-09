@@ -11,4 +11,13 @@
     <PackageReference Include="FluentResults" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModuloPaciente\" />
+    <Folder Include="ModuloPaciente\Aplicacao\" />
+    <Folder Include="ModuloPaciente\Apresentacao\" />
+    <Folder Include="ModuloPaciente\Apresentacao\Views\" />
+    <Folder Include="ModuloPaciente\Dominio\" />
+    <Folder Include="ModuloPaciente\Infra\" />
+  </ItemGroup>
+
 </Project>
