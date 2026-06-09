@@ -14,7 +14,9 @@ public class Program
 
         var app = builder.Build();
 
-        app.MapGet("/", () => "Hello World!");
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.MapDefaultControllerRoute();
 
         app.Run();
     }
