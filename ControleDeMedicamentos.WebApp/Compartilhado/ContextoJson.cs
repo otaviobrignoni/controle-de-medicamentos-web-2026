@@ -1,11 +1,14 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
 
 namespace ControleDeMedicamentos.WebApp.Compartilhado;
 // Infraestrutura
 public class ContextoJson
 {
     //List<T> (*) (*)s;
+    public List<Funcionario> Funcionarios { get; set; } = [];
+
     private readonly string caminhoArquivo;
     private readonly JsonSerializerOptions opcoesJson = new()
     {
@@ -46,5 +49,6 @@ public class ContextoJson
             return;
 
         //*s = contextoSalvo.(*)s
+        Funcionarios = contextoSalvo.Funcionarios;
     }
 }
