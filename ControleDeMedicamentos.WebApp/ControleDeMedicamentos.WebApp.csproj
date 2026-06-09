@@ -11,4 +11,8 @@
     <PackageReference Include="FluentResults" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModuloFuncionario\Infra\" />
+  </ItemGroup>
+
 </Project>

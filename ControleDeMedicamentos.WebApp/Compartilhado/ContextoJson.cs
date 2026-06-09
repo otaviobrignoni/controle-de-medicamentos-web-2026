@@ -21,7 +21,7 @@ public class ContextoJson
     {
         string caminhoAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-        string caminhoDiretorio = Path.Combine(caminhoAppData, "ListaDeCompras");
+        string caminhoDiretorio = Path.Combine(caminhoAppData, "ControleDeMedicamentosWeb");
 
         Directory.CreateDirectory(caminhoDiretorio);
 
