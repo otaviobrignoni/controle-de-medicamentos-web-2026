@@ -52,9 +52,7 @@ public class ServicoFornecedores
 
     public List<FornecedorDto> SelecionarTodos()
     {
-        List<Fornecedor> fornecedores = repositorioFornecedor.Selecionar();
-
-        return fornecedores.Select(f => new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Id)).ToList();
+        return repositorioFornecedor.Selecionar().Select(f => new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Id)).ToList();
     }
 
     public Result<FornecedorDto> SelecionarPorId(Guid id)
@@ -67,7 +65,7 @@ public class ServicoFornecedores
         return Result.Ok(new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Id));
     }
 
-    private Result Falha(string campo, string mensagem)
+    private static Result Falha(string campo, string mensagem)
     {
         return Result.Fail(new Error(mensagem).WithMetadata("Campo", campo));
     }
