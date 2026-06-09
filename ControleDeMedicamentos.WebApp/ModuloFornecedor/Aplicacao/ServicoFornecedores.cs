@@ -7,12 +7,10 @@ namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 public class ServicoFornecedores
 {
     private readonly IRepositorioFornecedor repositorioFornecedor;
-    private readonly IMapper mapeador;
 
     public ServicoFornecedores(IRepositorioFornecedor repositorioFornecedor, IMapper mapeador)
     {
         this.repositorioFornecedor = repositorioFornecedor;
-        this.mapeador = mapeador;
     }
 
     public Result Cadastrar(FornecedorDto dto)
