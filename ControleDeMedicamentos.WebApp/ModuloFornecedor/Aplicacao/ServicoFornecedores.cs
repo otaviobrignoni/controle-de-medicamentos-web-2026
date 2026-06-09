@@ -18,7 +18,7 @@ public class ServicoFornecedores
     public Result Cadastrar(FornecedorDto dto)
     {
         if (repositorioFornecedor.Registros.Any(f => string.Equals(f.CNPJ, dto.CNPJ)))
-            return Falha("Nome", "Já existe um Fornecedor com esse CNPJ");
+            return Falha("CNPJ", "Já existe um Fornecedor com esse CNPJ");
 
         Fornecedor novoForncedor = new(dto.Nome, dto.Telefone, dto.CNPJ);
 
@@ -30,7 +30,7 @@ public class ServicoFornecedores
     public Result Editar(FornecedorDto dto)
     {
         if (repositorioFornecedor.Selecionar(f => f.Id != dto.Id).Any(f => string.Equals(f.CNPJ, dto.CNPJ)))
-            return Falha("Nome", "Já existe um Fornecedor com esse CNPJ");
+            return Falha("CNPJ", "Já existe um Fornecedor com esse CNPJ");
 
         Fornecedor fornecedorEditado = new(dto.Nome, dto.Telefone, dto.CNPJ);
 
@@ -66,7 +66,7 @@ public class ServicoFornecedores
         if (f is null)
             return Result.Fail("Fornecedor não encontrado");
 
-        return Result.Ok(new FornecedorDto(f.Nome, f.Telefone, f.CNPJ));
+        return Result.Ok(new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Id));
     }
 
     private Result Falha(string campo, string mensagem)

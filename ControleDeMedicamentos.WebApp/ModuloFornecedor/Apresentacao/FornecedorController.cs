@@ -68,7 +68,7 @@ public class FornecedorController(ServicoFornecedores servicoFornecedor, IMapper
     [HttpPost]
     public ActionResult Editar(FornecedorViewModel vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
             return View(vm);
 
         var dto = mapeador.Map<FornecedorDto>(vm);

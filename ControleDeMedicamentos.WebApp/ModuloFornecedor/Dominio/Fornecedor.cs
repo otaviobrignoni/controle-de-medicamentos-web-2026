@@ -21,6 +21,6 @@ public class Fornecedor : EntidadeBase<Fornecedor>
     {
         Nome = entidadeAtualizada.Nome;
         Telefone = entidadeAtualizada.Telefone;
-        CNPJ = entidadeAtualizada.Telefone;
+        CNPJ = entidadeAtualizada.CNPJ;
     }
 }

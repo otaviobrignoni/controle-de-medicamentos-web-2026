@@ -13,7 +13,7 @@ public record FornecedorViewModel
     string Telefone,
 
     [Required(ErrorMessage ="O campo \"CNPJ\" deve ser preenchido")]
-    [RegularExpression(@"^[0-9]{14}$", ErrorMessage = "O campo \"CNPJ\" deve estar no formato xx.xxx.xxx/xxxx.xx")]
+    [RegularExpression(@"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$",ErrorMessage = "O campo \"CNPJ\" deve estar no formato xx.xxx.xxx/xxxx-xx")]
     string CNPJ,
 
     Guid Id = new Guid()
