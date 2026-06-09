@@ -10,11 +10,11 @@ public class Fornecedor : EntidadeBase<Fornecedor>
 
     public Fornecedor() { }
 
-    public Fornecedor(string nome, string telefone, string cnpj)
+    public Fornecedor(string nome, string telefone, string CNPJ)
     {
         Nome = nome;
         Telefone = telefone;
-        CNPJ = cnpj;
+        this.CNPJ = CNPJ;
     }
 
     public override void Atualizar(Fornecedor entidadeAtualizada)
