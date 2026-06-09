@@ -11,4 +11,13 @@
     <PackageReference Include="FluentResults" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modulo Fornecedor\" />
+    <Folder Include="Modulo Fornecedor\Aplicacao\" />
+    <Folder Include="Modulo Fornecedor\Apresentacao\" />
+    <Folder Include="Modulo Fornecedor\Apresentacao\Views\" />
+    <Folder Include="Modulo Fornecedor\Dominio\" />
+    <Folder Include="Modulo Fornecedor\Infra\" />
+  </ItemGroup>
+
 </Project>
