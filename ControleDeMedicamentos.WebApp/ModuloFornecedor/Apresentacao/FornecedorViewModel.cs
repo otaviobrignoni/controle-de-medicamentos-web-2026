@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Apresentacao;
+namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao;
 
 public record FornecedorViewModel
 (

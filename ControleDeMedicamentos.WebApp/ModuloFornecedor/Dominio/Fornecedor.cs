@@ -1,6 +1,6 @@
 using ControleDeMedicamentos.WebApp.Compartilhado.ModuloBase;
 
-namespace ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Dominio;
+namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 
 public class Fornecedor : EntidadeBase<Fornecedor>
 {

@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Dominio;
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 
 namespace ControleDeMedicamentos.WebApp.Compartilhado;
 // Infraestrutura

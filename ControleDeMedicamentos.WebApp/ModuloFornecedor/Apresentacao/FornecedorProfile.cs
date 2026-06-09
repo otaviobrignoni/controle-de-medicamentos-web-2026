@@ -1,7 +1,7 @@
 using AutoMapper;
-using ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Aplicacao;
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 
-namespace ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Apresentacao.Views;
+namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao.Views;
 
 public class FornecedorProfile : Profile
 {

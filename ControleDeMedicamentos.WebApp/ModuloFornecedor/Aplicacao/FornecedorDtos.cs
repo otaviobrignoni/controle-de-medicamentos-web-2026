@@ -1,4 +1,4 @@
-namespace ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Aplicacao;
+namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 
 public record FornecedorDto
 (

@@ -1,8 +1,8 @@
 using AutoMapper;
-using ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Dominio;
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using FluentResults;
 
-namespace ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Aplicacao;
+namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 
 public class ServicoFornecedores
 {

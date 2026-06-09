@@ -1,10 +1,10 @@
 using AutoMapper;
 using ControleDeMedicamentos.WebApp.Compartilhado.Extensions;
-using ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Aplicacao;
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Apresentacao;
+namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao;
 
 public class FornecedorController(ServicoFornecedores servicoFornecedor, IMapper mapeador) : Controller
 {

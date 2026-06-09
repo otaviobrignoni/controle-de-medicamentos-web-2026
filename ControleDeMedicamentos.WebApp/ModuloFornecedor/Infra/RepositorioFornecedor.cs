@@ -1,8 +1,8 @@
 using ControleDeMedicamentos.WebApp.Compartilhado;
 using ControleDeMedicamentos.WebApp.Compartilhado.ModuloBase;
-using ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Dominio;
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 
-namespace ControleDeMedicamentos.WebApp.Modulo_Fornecedor.Infra;
+namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Infra;
 
 public class RepositorioFornecedor : RepositorioBase<Fornecedor>, IRepositorioFornecedor
 {
