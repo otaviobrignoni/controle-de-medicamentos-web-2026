@@ -24,27 +24,27 @@
 else
 {
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
-        @foreach (CategoriaViewModel c in Model)
+        @foreach (FornecedorViewModel f in Model)
         {
             <div class="col">
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
-                            <h5 class="card-title mb-0">@c.Nome</h5>
-                            <span class="badge text-bg-primary rounded-pill">#@c.Id</span>
+                            <h5 class="card-title mb-0">@f.Nome</h5>
+                            <span class="badge text-bg-primary rounded-pill">#@f.Id</span>
                         </div>
 
                         <dl class="row g-2 mb-4">
-                            <dt class="col-6 text-secondary fw-semibold">Cor</dt>
-                            <dd class="col-6 mb-0 text-break">@c.Cor</dd>
+                            <dt class="col-6 text-secondary fw-semibold">Telefone</dt>
+                            <dd class="col-6 mb-0 text-break">@f.Telefone</dd>
 
-                            <dt class="col-6 text-secondary fw-semibold">Quantidade de produtos</dt>
-                            <dd class="col-6 mb-0 text-break">@c.QtdProduto</dd>
+                            <dt class="col-6 text-secondary fw-semibold">CNPJ</dt>
+                            <dd class="col-6 mb-0 text-break">@f.CNPJ</dd>
                         </dl>
 
                         <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar" asp-route-id="@c.Id">Editar</a>
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir" asp-route-id="@c.Id">Excluir</a>
+                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar" asp-route-id="@f.Id">Editar</a>
+                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir" asp-route-id="@f.Id">Excluir</a>
                         </div>
                     </div>
                 </div>
