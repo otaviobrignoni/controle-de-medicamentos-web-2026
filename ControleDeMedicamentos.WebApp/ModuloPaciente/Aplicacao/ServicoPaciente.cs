@@ -26,7 +26,7 @@ public class ServicoPaciente
 
     public Result Editar(PacienteDto dto)
     {
-        if (repositorioPaciente.Selecionar(f => f.CartaoSUS != dto.CartaoSUS).Any(f => string.Equals(f.CartaoSUS, dto.CartaoSUS)))
+        if (repositorioPaciente.Selecionar(f => f.Id != dto.Id).Any(f => string.Equals(f.CartaoSUS, dto.CartaoSUS)))
             return Falha("CartaoSUS", "Já existe um Paciente com esse cartaoSUS");
 
         Paciente pacienteEditado = new(dto.Nome, dto.Telefone, dto.CartaoSUS, dto.CPF);
@@ -34,7 +34,7 @@ public class ServicoPaciente
         bool conseguiuEditar = repositorioPaciente.Editar(dto.Id, pacienteEditado);
 
         if (!conseguiuEditar)
-            return Result.Fail("Paciente não encontrado");
+            return Falha("Id", "Paciente não encontrado");
 
         return Result.Ok();
     }
@@ -61,7 +61,7 @@ public class ServicoPaciente
         if (p is null)
             return Result.Fail("Paciente não encontrado");
 
-        return Result.Ok(new PacienteDto(p.Nome, p.Telefone, p.CartaoSUS, p.CPF));
+        return Result.Ok(new PacienteDto(p.Nome, p.Telefone, p.CartaoSUS, p.CPF, p.Id));
     }
 
     private static Result Falha(string campo, string mensagem)
