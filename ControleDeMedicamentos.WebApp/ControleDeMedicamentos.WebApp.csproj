@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ModuloMedicamento\" />
+    <Folder Include="ModuloMedicamento\Aplicacao\" />
+    <Folder Include="ModuloMedicamento\Apresentacao\" />
+    <Folder Include="ModuloMedicamento\Dominio\" />
+    <Folder Include="ModuloMedicamento\Infra\" />
     <Folder Include="ModuloPaciente\Apresentacao\" />
     <Folder Include="ModuloPaciente\Apresentacao\Views\" />
     <Folder Include="ModuloPaciente\Dominio\" />
