@@ -14,7 +14,7 @@
         <a class="btn btn-primary rounded-pill px-4" asp-controller="Medicamento" asp-action="Listar">Acessar Medicamentos</a>
         <a class="btn btn-primary rounded-pill px-4" asp-controller="Paciente" asp-action="Listar">Acessar Pacientes</a>
         <a class="btn btn-primary rounded-pill px-4" asp-controller="Funcionario" asp-action="Listar">Acessar Funcionários</a>
-
+        <a class="btn btn-primary rounded-pill px-4" asp-controller="Estoque" asp-action="Listar">Acessar Estoque</a>
     </div>
 
     <div class="col-lg-5">
@@ -51,6 +51,12 @@
                 <div class="list-group">
                     <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" asp-controller="Funcionario" asp-action="Listar">
                         Controle de Funcionários
+                        <span class="badge text-bg-primary rounded-pill">Abrir</span>
+                    </a>
+                </div>
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" asp-controller="Estoque" asp-action="Listar">
+                        Controle de Estoque
                         <span class="badge text-bg-primary rounded-pill">Abrir</span>
                     </a>
                 </div>

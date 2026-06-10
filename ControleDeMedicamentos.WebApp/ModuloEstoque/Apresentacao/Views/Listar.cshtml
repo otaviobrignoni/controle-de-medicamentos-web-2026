@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Titulo = "Listagem de Requsições";
+}
+
+@model (List<DetalhesEntradaViewModel> entradas, List<DetalhesSaidaViewModel> saidas);
+
+
+<a class="btn btn-outline-primary rounded-pill px-4 mb-3" asp-action="Cadastrar">Cadastrar Nova</a>
+
+@if (TempData["MensagemErro"] is string mensagemErro)
+{
+    <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
+        @mensagemErro
+    </div>
+}
+
+@if (Model.entradas.Count == 0 && Model.saidas.Count == 0)
+{
+    <div class="alert alert-primary border-start border-primary border-2 rounded-3" role="alert">
+        Nenhuma requisição cadastrada.
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+        <h3 class="card-title mb-0">Entradas</h3>
+
+        @foreach (var re in Model.entradas)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="card-title mb-0">Entrada @re.Data</h5>
+                            <span class="text-secondary fw-semibold small">@re.Id</span>
+                        </div>
+
+                        <dl class="row g-2 mb-4">
+                            <dt class="col-6 text-secondary fw-semibold">Medicamento</dt>
+                            <dd class="col-6 mb-0 text-break">@re.Medicamento</dd>
+
+                            <dt class="col-6 text-secondary fw-semibold">Quantidade</dt>
+                            <dd class="col-6 mb-0 text-break">@re.Quantidade</dd>
+
+                            <dt class="col-6 text-secondary fw-semibold">Funcionário</dt>
+                            <dd class="col-6 mb-0 text-break">@re.Funcionario</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+        <h3 class="card-title mb-0">Saídas</h3>
+        @foreach (var rs in Model.saidas)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="card-title mb-0">Saída @rs.Data</h5>
+                            <span class="text-secondary fw-semibold small">@rs.Id</span>
+                        </div>
+
+                        <dl class="row g-2 mb-4">
+                            <dt class="col-6 text-secondary fw-semibold">Paciente</dt>
+                            <dd class="col-6 mb-0 text-break">@rs.Paciente</dd>
+
+                            <dt class="col-6 text-secondary fw-semibold">Medicamentos</dt>
+                            <dd class="col-6 mb-0 text-break">
+                                @foreach (var irs in @rs.Itens)
+                                {
+                                    <span>@irs.Quantidade @irs.Medicamento</span>
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -12,6 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ModuloEstoque\" />
+    <Folder Include="ModuloEstoque\Aplicacao\" />
+    <Folder Include="ModuloEstoque\Apresentacao\" />
+    <Folder Include="ModuloEstoque\Apresentacao\Views\" />
+    <Folder Include="ModuloEstoque\Dominio\" />
+    <Folder Include="ModuloEstoque\Infra\" />
     <Folder Include="ModuloMedicamento\Apresentacao\" />
     <Folder Include="ModuloMedicamento\Apresentacao\Views\" />
     <Folder Include="ModuloMedicamento\Dominio\" />
