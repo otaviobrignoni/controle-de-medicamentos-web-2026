@@ -9,6 +9,7 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao
 {
     public class MedicamentoController(ServicoMedicamento servicoMedicamento, ServicoFornecedor servicoFornecedor, IMapper mapeador) : Controller
     {
+        [HttpGet]
         public ActionResult Listar()
         {
             var dtos = servicoMedicamento.SelecionarTodosListagem();
@@ -45,10 +46,47 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao
 
             return RedirectToAction(nameof(Listar));
         }
-        [HttpPost]
-        [HttpPost]
+
         [HttpGet]
+        public ActionResult Editar(Guid id)
+        {
+            var resultado = servicoMedicamento.SelecionarPorId(id);
+
+            if (resultado.IsFailed)
+            {
+                TempData.AddErrorMessage(resultado);
+
+                return RedirectToAction(nameof(Listar));
+            }
+
+            var vm = mapeador.Map<MedicamentoViewModel>(resultado.Value);
+
+            return View(vm with { Fornecedores = ObterFornecedores() });
+        }
+        [HttpPost]
+        public ActionResult Editar(MedicamentoViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return View(vm with { Fornecedores = ObterFornecedores() });
+
+            var dto = mapeador.Map<EditarMedicamentoDto>(vm);
+
+            Result resultado = servicoMedicamento.Editar(dto);
+
+            if (resultado.IsFailed)
+            {
+                ModelState.AddModelError(resultado);
+
+                return View(vm with { Fornecedores = ObterFornecedores() });
+            }
+
+            return RedirectToAction(nameof(Listar));
+        }
+
         [HttpGet]
+
+
+        [HttpPost]
 
         public List<OpcoesFornecedorViewModel> ObterFornecedores()
         {

@@ -30,8 +30,8 @@ else
                 <div class="card h-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
-                            <h5 class="card-title mb-0">@f.Nome</h5>
-                            <span class="text-secondary fw-semibold small">#@f.Id</span>
+                            <h5 class="card-title mb-0">@f.Nome.Capitalizar()</h5>
+                            <span class="text-secondary fw-semibold small" style="opacity: 0.5">@f.Id.ToString()[..8]</span>
                         </div>
 
                         <dl class="row g-2 mb-4">
