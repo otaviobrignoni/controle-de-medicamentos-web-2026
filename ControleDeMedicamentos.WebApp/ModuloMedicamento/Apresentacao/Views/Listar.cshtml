@@ -1,5 +1,4 @@
 ﻿@{
-    Layout = "_Layout";
     ViewBag.Titulo = "Listagem de Medicamentos";
 }
 
@@ -36,7 +35,7 @@ else
 
                         <dl class="row g-2 mb-4">
                             <dt class="col-6 text-secondary fw-semibold">Descrição</dt>
-                            <dd class="col-6 mb-0 text-break">@f.Descricao</dd>
+                            <dd class="col-6 mb-0 text-break">@f.Descricao.Truncar(25)</dd>
 
                             <dt class="col-6 text-secondary fw-semibold">Quantidade</dt>
                             <dd class="col-6 mb-0 text-break">@f.Quantidade</dd>
@@ -48,6 +47,7 @@ else
                         <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
                             <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar" asp-route-id="@f.Id">Editar</a>
                             <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir" asp-route-id="@f.Id">Excluir</a>
+                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Detalhes" asp-route-id="@f.Id">Detalhes</a>
                         </div>
                     </div>
                 </div>
