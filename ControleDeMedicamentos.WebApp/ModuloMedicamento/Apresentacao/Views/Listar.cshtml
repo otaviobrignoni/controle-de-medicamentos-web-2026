@@ -38,9 +38,14 @@ else
                             <dd class="col-6 mb-0 text-break">@f.Descricao.Truncar(25)</dd>
 
                             <dt class="col-6 text-secondary fw-semibold">Quantidade</dt>
-                            <dd class="col-6 mb-0 text-break">@f.Quantidade</dd>
+                            <dd class="col-6 mb-0 text-break">@f.Quantidade
+                                @if (f.Quantidade > 0)
+                                {
+                                    <span class="text-danger fw-bold">!</span>
+                                }
+                            </dd>
 
-                            <dt class="col-6 text-secondary fw-semibold">Fornecedor</dt>
+                            <dt class=" col-6 text-secondary fw-semibold">Fornecedor</dt>
                             <dd class="col-6 mb-0 text-break">@f.FornecedorNome</dd>
                         </dl>
 
