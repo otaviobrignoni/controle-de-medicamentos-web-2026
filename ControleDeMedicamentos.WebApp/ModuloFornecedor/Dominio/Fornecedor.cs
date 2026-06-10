@@ -1,4 +1,5 @@
 using ControleDeMedicamentos.WebApp.Compartilhado.ModuloBase;
+using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 
@@ -7,6 +8,7 @@ public class Fornecedor : EntidadeBase<Fornecedor>
     public string Nome { get; set; } = string.Empty;
     public string Telefone { get; set; } = string.Empty;
     public string CNPJ { get; set; } = string.Empty;
+    public List<Medicamento> Medicamentos { get; set; } = [];
 
     public Fornecedor() { }
 
@@ -16,11 +18,18 @@ public class Fornecedor : EntidadeBase<Fornecedor>
         Telefone = telefone;
         this.CNPJ = CNPJ;
     }
-
     public override void Atualizar(Fornecedor entidadeAtualizada)
     {
         Nome = entidadeAtualizada.Nome;
         Telefone = entidadeAtualizada.Telefone;
         CNPJ = entidadeAtualizada.CNPJ;
+    }
+    public void AdicionarRemedioHaFornecedor(Medicamento medicamento)
+    {
+        Medicamentos.Add(medicamento);
+    }
+    public void RemoverRemedioDoFornecedor(Medicamento medicamento)
+    {
+        Medicamentos.Remove(medicamento);
     }
 }

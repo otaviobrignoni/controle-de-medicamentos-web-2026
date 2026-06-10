@@ -21,7 +21,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        FornecedorViewModel vm = new(string.Empty, string.Empty, string.Empty);
+        FornecedorViewModel vm = new(string.Empty, string.Empty, string.Empty, 0);
 
         return View(vm);
     }
@@ -42,6 +42,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
 
             return View(vm);
         }
+
 
         return RedirectToAction(nameof(Listar));
     }

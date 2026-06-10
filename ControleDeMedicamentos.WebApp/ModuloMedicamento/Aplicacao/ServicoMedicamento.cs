@@ -24,9 +24,11 @@ public class ServicoMedicamento
         if (fornecedor is null)
             return Falha("Fornecedor", "O \"Fornecedor\" e possivelmente nulo");
 
-        Medicamento novoPaciente = new(dto.Nome, dto.Descricao, dto.Quantidade, fornecedor);
+        Medicamento novoMedicamento = new(dto.Nome, dto.Descricao, dto.Quantidade, fornecedor);
 
-        repositorioMedicamento.Cadastrar(novoPaciente);
+        novoMedicamento.Fornecedor.AdicionarRemedioHaFornecedor(novoMedicamento);
+
+        repositorioMedicamento.Cadastrar(novoMedicamento);
 
         return Result.Ok();
     }
@@ -57,6 +59,9 @@ public class ServicoMedicamento
 
         if (!conseguiuExcluir)
             return Result.Fail("O medicamento não foi encontrado");
+
+        Medicamento medicamento = repositorioMedicamento.Selecionar(id)!;
+        medicamento.Fornecedor.RemoverRemedioDoFornecedor(medicamento);
 
         return Result.Ok();
     }
