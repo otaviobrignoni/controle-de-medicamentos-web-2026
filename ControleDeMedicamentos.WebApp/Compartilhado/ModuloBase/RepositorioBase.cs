@@ -56,7 +56,7 @@ public abstract class RepositorioBase<T> where T : EntidadeBase<T>
             contexto.Salvar();
             return true;
         }
-        
+
         return false;
     }
 
@@ -67,8 +67,6 @@ public abstract class RepositorioBase<T> where T : EntidadeBase<T>
 
     public List<T> Selecionar(Func<T, bool>? filtro = null)
     {
-        if (filtro is null)
-            return Registros;
-        return Registros.Where(filtro).ToList();
+        return filtro is null ? Registros : Registros.Where(filtro).ToList();
     }
 }
