@@ -1,6 +1,8 @@
 using AutoMapper;
+using ControleDeMedicamentos.WebApp.Compartilhado.Extensions;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Aplicacao;
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao
@@ -19,18 +21,36 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao
         [HttpGet]
         public ActionResult Cadastrar()
         {
-            MedicamentoViewModel vm = new(string.Empty, string.Empty, 0, new Guid(), ObterCategorias());
+            MedicamentoViewModel vm = new(string.Empty, string.Empty, 0, new Guid(), ObterFornecedores());
 
             return View(vm);
         }
 
         [HttpPost]
+        public ActionResult Cadastrar(MedicamentoViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return View(vm with { Fornecedores = ObterFornecedores() });
+
+            var dto = mapeador.Map<CadastrarMedicamentoDto>(vm);
+
+            Result resultado = servicoMedicamento.Cadastrar(dto);
+
+            if (resultado.IsFailed)
+            {
+                ModelState.AddModelError(resultado);
+
+                return View(vm with { Fornecedores = ObterFornecedores() });
+            }
+
+            return RedirectToAction(nameof(Listar));
+        }
         [HttpPost]
         [HttpPost]
         [HttpGet]
         [HttpGet]
 
-        public List<OpcoesFornecedorViewModel> ObterCategorias()
+        public List<OpcoesFornecedorViewModel> ObterFornecedores()
         {
             var dtos = servicoFornecedor.SelecionarTodos();
 

@@ -14,7 +14,7 @@ public class ServicoMedicamento
         this.repositorioMedicamento = repositorioMedicamento;
     }
 
-    public Result CadastrarMedicamento(CadastrarMedicamentoDto dto)
+    public Result Cadastrar(CadastrarMedicamentoDto dto)
     {
         if (repositorioMedicamento.Registros.Any(f => string.Equals(f.Nome, dto.Nome)))
             return Falha("Nome", "Esse medicamento já existe no programa");
@@ -31,7 +31,7 @@ public class ServicoMedicamento
         return Result.Ok();
     }
 
-    public Result EditarMedicamentos(EditarMedicamentoDto dto)
+    public Result Editar(EditarMedicamentoDto dto)
     {
         if (repositorioMedicamento.Selecionar(m => m.Id != dto.Id).Any(f => string.Equals(f.Nome, dto.Nome)))
             return Falha("Nome", "Já existe um Paciente com esse cartaoSUS");
@@ -51,7 +51,7 @@ public class ServicoMedicamento
         return Result.Ok();
     }
 
-    public Result ExcluirMedicamento(Guid id)
+    public Result Excluir(Guid id)
     {
         bool conseguiuExcluir = repositorioMedicamento.Excluir(id);
 

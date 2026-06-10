@@ -32,7 +32,7 @@ public record MedicamentoMostrarViewModel
 
     int Quantidade,
 
-    string CategoriaNome,
+    string FornecedorNome,
 
     Guid Id = new Guid()
 );

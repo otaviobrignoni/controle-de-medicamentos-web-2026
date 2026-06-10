@@ -9,6 +9,9 @@ public class Paciente : EntidadeBase<Paciente>
     public string CartaoSUS { get; set; } = string.Empty;
     public string CPF { get; set; } = string.Empty;
 
+    public Paciente()
+    {
+    }
     public Paciente
     (
         string nome,
