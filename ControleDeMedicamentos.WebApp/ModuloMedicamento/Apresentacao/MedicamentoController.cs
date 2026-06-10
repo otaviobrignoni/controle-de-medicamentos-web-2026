@@ -84,10 +84,57 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao
         }
 
         [HttpGet]
+        public ActionResult Excluir(Guid id)
+        {
+            var resultado = servicoMedicamento.SelecionarPorId(id);
 
+            if (resultado.IsFailed)
+            {
+                TempData.AddErrorMessage(resultado);
 
+                return RedirectToAction(nameof(Listar));
+            }
+
+            var dto = resultado.Value;
+
+            var vm = mapeador.Map<MedicamentoMostrarViewModel>(dto);
+
+            return View(vm);
+        }
         [HttpPost]
+        public ActionResult Excluir(MedicamentoMostrarViewModel vm)
+        {
+            if (ModelState.IsValid)
+                return View(vm);
 
+            var resultado = servicoMedicamento.Excluir(vm.Id);
+
+            if (resultado.IsFailed)
+            {
+                ModelState.AddModelError(resultado);
+
+                return View(vm);
+            }
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        [HttpGet]
+        public ActionResult Detalhes(Guid id)
+        {
+            var resultado = servicoMedicamento.SelecionarPorId(id);
+
+            if (resultado.IsFailed)
+            {
+                TempData.AddErrorMessage(resultado);
+
+                return RedirectToAction(nameof(Listar));
+            }
+
+            var vm = mapeador.Map<MedicamentoMostrarViewModel>(resultado.Value);
+
+            return View(vm);
+        }
         public List<OpcoesFornecedorViewModel> ObterFornecedores()
         {
             var dtos = servicoFornecedor.SelecionarTodos();
