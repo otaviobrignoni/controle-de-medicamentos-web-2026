@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="ModuloMedicamento\Apresentacao\" />
+    <Folder Include="ModuloMedicamento\Apresentacao\Views\" />
     <Folder Include="ModuloMedicamento\Dominio\" />
     <Folder Include="ModuloMedicamento\Infra\" />
     <Folder Include="ModuloPaciente\Apresentacao\" />
