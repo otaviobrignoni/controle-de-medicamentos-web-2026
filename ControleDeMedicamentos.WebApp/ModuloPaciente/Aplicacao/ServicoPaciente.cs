@@ -26,7 +26,7 @@ public class ServicoPaciente
 
     public Result Editar(PacienteDto dto)
     {
-        if (repositorioPaciente.Selecionar(f => f.Id != dto.Id).Any(f => string.Equals(f.CartaoSUS, dto.CartaoSUS)))
+        if (repositorioPaciente.Selecionar(f => f.CartaoSUS != dto.CartaoSUS).Any(f => string.Equals(f.CartaoSUS, dto.CartaoSUS)))
             return Falha("CartaoSUS", "Já existe um Paciente com esse cartaoSUS");
 
         Paciente pacienteEditado = new(dto.Nome, dto.Telefone, dto.CartaoSUS, dto.CPF);
@@ -51,7 +51,7 @@ public class ServicoPaciente
 
     public List<PacienteDto> SelecionarTodos()
     {
-        return repositorioPaciente.Selecionar().Select(f => new PacienteDto(f.Nome, f.Telefone, f.CartaoSUS, f.CPF)).ToList();
+        return repositorioPaciente.Selecionar().Select(f => new PacienteDto(f.Nome, f.Telefone, f.CartaoSUS, f.CPF, f.Id)).ToList();
     }
 
     public Result<PacienteDto> SelecionarPorId(Guid id)
