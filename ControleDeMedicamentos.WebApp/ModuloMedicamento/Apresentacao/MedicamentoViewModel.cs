@@ -16,11 +16,11 @@ public record MedicamentoViewModel
 
     int Quantidade,
 
-    [Required(ErrorMessage = "O campo \"Categoria\" deve ser preenchido")]
-    Guid CategoriaId,
+    [Required(ErrorMessage = "O campo \"Fornecedor\" deve ser preenchido")]
+    Guid FornecedorId,
 
     [ValidateNever]
-    OpcoesFornecedores Fornecedores,
+    List<OpcoesFornecedorViewModel> Fornecedores,
 
     Guid Id = new Guid()
 );
@@ -36,7 +36,7 @@ public record MedicamentoMostrarViewModel
 
     Guid Id = new Guid()
 );
-public record OpcoesFornecedores
+public record OpcoesFornecedorViewModel
 (
     Guid Id,
     string Nome

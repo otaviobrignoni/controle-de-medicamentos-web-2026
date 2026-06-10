@@ -55,7 +55,7 @@ public static class InjecaoDependencia
     public static void AddServicesConfig(this IServiceCollection services)
     {
         //services.AddScoped<Servico(*)>();
-        services.AddScoped<ServicoFornecedores>();
+        services.AddScoped<ServicoFornecedor>();
         services.AddScoped<ServicoPaciente>();
         services.AddScoped<ServicoMedicamento>();
     }

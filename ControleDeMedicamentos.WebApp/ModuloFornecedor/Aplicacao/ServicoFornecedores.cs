@@ -4,11 +4,11 @@ using FluentResults;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 
-public class ServicoFornecedores
+public class ServicoFornecedor
 {
     private readonly IRepositorioFornecedor repositorioFornecedor;
 
-    public ServicoFornecedores(IRepositorioFornecedor repositorioFornecedor, IMapper mapeador)
+    public ServicoFornecedor(IRepositorioFornecedor repositorioFornecedor, IMapper mapeador)
     {
         this.repositorioFornecedor = repositorioFornecedor;
     }

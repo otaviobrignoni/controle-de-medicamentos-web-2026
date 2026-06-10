@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao;
 
-public class FornecedorController(ServicoFornecedores servicoFornecedor, IMapper mapeador) : Controller
+public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper mapeador) : Controller
 {
     [HttpGet]
     public ActionResult Listar()
