@@ -1,0 +1,42 @@
+﻿﻿@{
+ViewBag.Titulo = "Realizar requisição de entrada";
+}
+
+@model CadastrarEntradaViewModel;
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="CadastrarEntrada" method="post">
+
+    <div class="mb-3">
+        <label asp-for="MedicamentoId" class="form-label fw-semibold text-primary text-uppercase small">Medicamento</label>
+        <select asp-for="MedicamentoId" asp-items="@Model.Medicamentos" type="text" class="form-control">
+            <option value="">Selecione um Medicamento</option>
+        </select>
+        <span asp-validation-for="MedicamentoId" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Quantidade" class="form-label fw-semibold text-primary text-uppercase small">Quantidade</label>
+        <input asp-for="Quantidade" type="number" min="1" class="form-control">
+        <span asp-validation-for="Quantidade" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FuncionarioId" class="form-label fw-semibold text-primary text-uppercase small">Funcionário</label>
+        <select asp-for="FuncionarioId" asp-items="@Model.Funcionarios" type="text" class="form-control">
+            <option value="">Selecione um Funcionário</option>
+        </select>
+        <span asp-validation-for="FuncionarioId" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Cadastrar">Voltar</a>
+        @if (Model.Medicamentos.Count == 0 || Model.Funcionarios.Count == 0)
+        {
+            <button class="btn btn-primary rounded-pill px-4" type="submit" disabled>Confirmar</button>
+        }
+        else
+        {
+            <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+        }
+    </div>
+</form>

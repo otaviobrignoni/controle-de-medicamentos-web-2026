@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Titulo = "Listagem de Requsições";
+}
+
+@model (List<DetalhesEntradaViewModel> entradas, List<DetalhesSaidaViewModel> saidas)
+
+<div class="d-flex justify-content-start mb-4">
+    <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Cadastrar">Cadastrar Nova</a>
+</div>
+
+@if (TempData["MensagemErro"] is string mensagemErro)
+{
+    <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
+        @mensagemErro
+    </div>
+}
+
+@if (Model.entradas.Count == 0 && Model.saidas.Count == 0)
+{
+    <div class="alert alert-primary border-start border-primary border-2 rounded-3" role="alert">
+        Nenhuma requisição cadastrada.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        <section class="col-12 col-lg-6">
+            <h3 class="mb-3">Entradas</h3>
+
+            <div class="card border-primary-subtle shadow-sm">
+                <div class="card-body">
+                    @if (Model.entradas.Count == 0)
+                    {
+                        <p class="text-secondary mb-0">Nenhuma requisição de entrada cadastrada.</p>
+                    }
+
+                    <div class="vstack gap-3">
+                        @foreach (var re in Model.entradas)
+                        {
+                            <article class="border rounded p-3">
+                                <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mb-3">
+                                    <h5 class="mb-0">Entrada @re.Data</h5>
+                                    <span class="text-secondary fw-semibold small text-break">@re.Id</span>
+                                </div>
+
+                                <dl class="row g-2 mb-0">
+                                    <dt class="col-5 text-secondary">Medicamento</dt>
+                                    <dd class="col-7 mb-0 text-break">@re.Medicamento</dd>
+
+                                    <dt class="col-5 text-secondary">Quantidade</dt>
+                                    <dd class="col-7 mb-0">@re.Quantidade</dd>
+
+                                    <dt class="col-5 text-secondary">Funcionário</dt>
+                                    <dd class="col-7 mb-0 text-break">@re.Funcionario</dd>
+                                </dl>
+                            </article>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="col-12 col-lg-6">
+            <h3 class="mb-3">Saídas</h3>
+
+            <div class="card border-primary-subtle shadow-sm">
+                <div class="card-body">
+                    @if (Model.saidas.Count == 0)
+                    {
+                        <p class="text-secondary mb-0">Nenhuma requisição de saída cadastrada.</p>
+                    }
+
+                    <div class="vstack gap-3">
+                        @foreach (var rs in Model.saidas)
+                        {
+                            <article class="border rounded p-3">
+                                <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mb-3">
+                                    <h5 class="mb-0">Saída @rs.Data</h5>
+                                    <span class="text-secondary fw-semibold small text-break">@rs.Id</span>
+                                </div>
+
+                                <dl class="row g-2 mb-0">
+                                    <dt class="col-5 text-secondary">Paciente</dt>
+                                    <dd class="col-7 mb-0 text-break">@rs.Paciente</dd>
+
+                                    <dt class="col-5 text-secondary">Medicamentos</dt>
+                                    <dd class="col-7 mb-0">
+                                        <ul class="list-unstyled mb-0">
+                                            @foreach (var item in rs.Itens)
+                                            {
+                                                <li>@item.Quantidade × @item.Medicamento</li>
+                                            }
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </article>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+}

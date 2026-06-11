@@ -29,6 +29,7 @@
                     <a class="nav-link" asp-controller="Medicamento" asp-action="Listar">Gerenciar Medicamentos</a>
                     <a class="nav-link" asp-controller="Paciente" asp-action="Listar">Gerenciar Pacientes</a>
                     <a class="nav-link" asp-controller="Funcionario" asp-action="Listar">Gerenciar Funcionários</a>
+                    <a class="nav-link" asp-controller="Estoque" asp-action="Listar">Gerenciar Estoque</a>
                 </div>
             </div>
         </div>
@@ -46,6 +47,7 @@
 
     @* Importação do JavaScript do Bootstrap *@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>

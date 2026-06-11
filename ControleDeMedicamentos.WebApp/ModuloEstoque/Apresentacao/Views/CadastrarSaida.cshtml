@@ -1,0 +1,71 @@
+@{
+    ViewBag.Titulo = "Realizar requisição de saída";
+}
+
+@model CadastrarSaidaViewModel
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 760px;" asp-action="CadastrarSaida" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger small fw-semibold mb-3"></div>
+
+    <div class="mb-4">
+        <label asp-for="PacienteId" class="form-label fw-semibold text-primary text-uppercase small">Paciente</label>
+        <select asp-for="PacienteId" asp-items="@Model.Pacientes" class="form-select">
+            <option value="">Selecione um paciente</option>
+        </select>
+        <span asp-validation-for="PacienteId" class="text-danger small fw-semibold"></span>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between mb-2">
+        <h5 class="form-label fw-semibold text-primary text-uppercase small mb-0">Medicamentos</h5>
+        <button id="adicionar-item" class="btn btn-outline-primary btn-sm" type="button">Adicionar medicamento</button>
+    </div>
+
+    <span asp-validation-for="Itens" class="text-danger small fw-semibold"></span>
+    <div id="itens">
+        @for (var i = 0; i < Model.Itens.Count; i++)
+        {
+            <div class="item-saida row g-2 align-items-start mb-2">
+                <div class="col-md-7">
+                    <select asp-for="Itens[i].MedicamentoId" asp-items="@Model.Medicamentos" class="form-select medicamento">
+                        <option value="">Selecione um medicamento</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input asp-for="Itens[i].Quantidade" type="number" min="1" class="form-control quantidade">
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button class="btn btn-outline-danger remover-item" type="button">Remover</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" asp-action="Cadastrar">Voltar</a>
+        <button class="btn btn-primary rounded-pill px-4" type="submit">Confirmar</button>
+    </div>
+</form>
+
+<template id="modelo-item">
+    <div class="item-saida row g-2 align-items-start mb-2">
+        <div class="col-md-7">
+            <select class="form-select medicamento">
+                <option value="">Selecione um medicamento</option>
+                @foreach (var medicamento in Model.Medicamentos)
+                {
+                    <option value="@medicamento.Value">@medicamento.Text</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="number" min="1" value="1" class="form-control quantidade">
+        </div>
+        <div class="col-md-2 d-grid">
+            <button class="btn btn-outline-danger remover-item" type="button">Remover</button>
+        </div>
+    </div>
+</template>
+
+@section Scripts {
+    <script src="~/js/estoque/cadastrar-saida.js"></script>
+}
