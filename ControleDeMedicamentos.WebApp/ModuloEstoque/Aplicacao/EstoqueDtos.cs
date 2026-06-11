@@ -7,9 +7,31 @@ public record DetalhesEntradaDto(
     int Quantidade,
     string Funcionario
 );
+
 public record DetalhesSaidaDto(
     Guid Id,
     DateTime Data,
     string Paciente,
-    List<(string Medicamento, int Quantidade)> Itens
+    List<ItemSaidaDto> Itens
+);
+
+public record CadastrarEntradaDto(
+    Guid MedicamentoId,
+    int Quantidade,
+    Guid FuncionarioId
+);
+
+public record CadastrarSaidaDto(
+    Guid PacienteId,
+    List<CadastrarItemSaidaDto> Itens
+);
+
+public record ItemSaidaDto(
+    string Medicamento,
+    int Quantidade
+);
+
+public record CadastrarItemSaidaDto(
+    Guid MedicamentoId,
+    int Quantidade
 );
