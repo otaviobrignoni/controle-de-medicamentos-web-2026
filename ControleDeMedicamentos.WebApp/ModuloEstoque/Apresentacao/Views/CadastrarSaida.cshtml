@@ -29,9 +29,11 @@
                     <select asp-for="Itens[i].MedicamentoId" asp-items="@Model.Medicamentos" class="form-select medicamento">
                         <option value="">Selecione um medicamento</option>
                     </select>
+                    <span asp-validation-for="Itens[i].MedicamentoId" class="text-danger small fw-semibold validacao-medicamento"></span>
                 </div>
                 <div class="col-md-3">
                     <input asp-for="Itens[i].Quantidade" type="number" min="1" class="form-control quantidade">
+                    <span asp-validation-for="Itens[i].Quantidade" class="text-danger small fw-semibold validacao-quantidade"></span>
                 </div>
                 <div class="col-md-2 d-grid">
                     <button class="btn btn-outline-danger remover-item" type="button">Remover</button>
@@ -56,9 +58,11 @@
                     <option value="@medicamento.Value">@medicamento.Text</option>
                 }
             </select>
+            <span class="text-danger small fw-semibold validacao-medicamento"></span>
         </div>
         <div class="col-md-3">
             <input type="number" min="1" value="1" class="form-control quantidade">
+            <span class="text-danger small fw-semibold validacao-quantidade"></span>
         </div>
         <div class="col-md-2 d-grid">
             <button class="btn btn-outline-danger remover-item" type="button">Remover</button>

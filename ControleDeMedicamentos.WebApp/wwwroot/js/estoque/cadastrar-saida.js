@@ -5,6 +5,8 @@ function atualizarNomes() {
   itens.querySelectorAll(".item-saida").forEach((item, indice) => {
     item.querySelector(".medicamento").name = `Itens[${indice}].MedicamentoId`;
     item.querySelector(".quantidade").name = `Itens[${indice}].Quantidade`;
+    item.querySelector(".validacao-medicamento").dataset.valmsgFor = `Itens[${indice}].MedicamentoId`;
+    item.querySelector(".validacao-quantidade").dataset.valmsgFor = `Itens[${indice}].Quantidade`;
   });
 }
 

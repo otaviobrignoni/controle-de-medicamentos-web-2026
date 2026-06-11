@@ -13,11 +13,16 @@ public class EstoqueProfile : Profile
     {
         CreateMap<DetalhesEntradaDto, DetalhesEntradaViewModel>();
         CreateMap<DetalhesSaidaDto, DetalhesSaidaViewModel>();
-        CreateMap<ItemSaidaDto, ItemSaidaViewModel>();
 
-        CreateMap<CadastrarEntradaViewModel, CadastrarEntradaDto>();
-        CreateMap<CadastrarSaidaViewModel, CadastrarSaidaDto>();
-        CreateMap<CadastrarItemSaidaViewModel, CadastrarItemSaidaDto>();
+        CreateMap<CadastrarEntradaViewModel, CadastrarEntradaDto>()
+            .ForCtorParam(nameof(CadastrarEntradaDto.MedicamentoId), opt => opt.MapFrom(src => src.MedicamentoId!.Value))
+            .ForCtorParam(nameof(CadastrarEntradaDto.FuncionarioId), opt => opt.MapFrom(src => src.FuncionarioId!.Value));
+        CreateMap<CadastrarSaidaViewModel, CadastrarSaidaDto>()
+            .ForCtorParam(nameof(CadastrarSaidaDto.PacienteId), opt => opt.MapFrom(src => src.PacienteId!.Value));
+        
+        CreateMap<ItemSaidaDto, ItemSaidaViewModel>();
+        CreateMap<CadastrarItemSaidaViewModel, CadastrarItemSaidaDto>()
+            .ForCtorParam(nameof(CadastrarItemSaidaDto.MedicamentoId), opt => opt.MapFrom(src => src.MedicamentoId!.Value));
 
         CreateMap<ListarMedicamentoDto, SelectListItem>()
             .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Nome))

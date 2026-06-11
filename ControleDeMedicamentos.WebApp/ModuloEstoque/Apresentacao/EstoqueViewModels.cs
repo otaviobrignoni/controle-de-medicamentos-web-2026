@@ -21,14 +21,14 @@ public record DetalhesSaidaViewModel(
 
 public record CadastrarEntradaViewModel(
     [Required(ErrorMessage = "O campo \"Medicamento\" deve ser preenchido.")]
-    Guid MedicamentoId,
+    Guid? MedicamentoId,
 
-    [Required(ErrorMessage = "O campo \"Medicamento\" deve ser preenchido.")]
+    [Required(ErrorMessage = "O campo \"Quantidade\" deve ser preenchido.")]
     [Range(1, int.MaxValue, ErrorMessage = "O campo \"Quantidade\" deve conter um valor positivo.")]
     int Quantidade,
 
     [Required(ErrorMessage = "O campo \"Funcionário\" deve ser preenchido.")]
-    Guid FuncionarioId,
+    Guid? FuncionarioId,
 
     [ValidateNever]
     List<SelectListItem> Medicamentos,
@@ -39,7 +39,7 @@ public record CadastrarEntradaViewModel(
 
 public record CadastrarSaidaViewModel(
     [Required(ErrorMessage = "O campo \"Paciente\" deve ser preenchido.")]
-    Guid PacienteId,
+    Guid? PacienteId,
 
     [MinLength(1, ErrorMessage = "Adicione pelo menos um medicamento.")]
     List<CadastrarItemSaidaViewModel> Itens,
@@ -53,9 +53,10 @@ public record CadastrarSaidaViewModel(
 );
 
 public record CadastrarItemSaidaViewModel(
-    Guid MedicamentoId,
+    [Required(ErrorMessage = "O campo \"Medicamento\" deve ser preenchido.")]
+    Guid? MedicamentoId,
 
-    [Range(1, int.MaxValue, ErrorMessage = "A quantidade deve ser positiva.")]
+    [Range(1, int.MaxValue, ErrorMessage = "O campo \"Quantidade\" deve conter um valor positivo.")]
     int Quantidade
 );
 

@@ -22,7 +22,7 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao
         [HttpGet]
         public ActionResult Cadastrar()
         {
-            MedicamentoViewModel vm = new(string.Empty, string.Empty, 0, new Guid(), ObterFornecedores());
+            MedicamentoViewModel vm = new(string.Empty, string.Empty, 0, null, ObterFornecedores());
 
             return View(vm);
         }

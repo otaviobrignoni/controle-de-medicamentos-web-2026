@@ -34,7 +34,7 @@ namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Apresentacao
         [HttpGet]
         public ActionResult CadastrarEntrada()
         {
-            var vm = new CadastrarEntradaViewModel(Guid.Empty, 0, Guid.Empty, SelecionarMedicamentos(), SelecionarFuncionarios());
+            var vm = new CadastrarEntradaViewModel(null, 0, null, SelecionarMedicamentos(), SelecionarFuncionarios());
             return View(vm);
         }
 
@@ -60,7 +60,7 @@ namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Apresentacao
         [HttpGet]
         public ActionResult CadastrarSaida()
         {
-            var vm = new CadastrarSaidaViewModel(Guid.Empty, [new(Guid.Empty, 1)], SelecionarPacientes(), SelecionarMedicamentos());
+            var vm = new CadastrarSaidaViewModel(null, [new(null, 1)], SelecionarPacientes(), SelecionarMedicamentos());
             return View(vm);
         }
 

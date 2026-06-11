@@ -17,7 +17,7 @@ public record MedicamentoViewModel
     int Quantidade,
 
     [Required(ErrorMessage = "O campo \"Fornecedor\" deve ser preenchido")]
-    Guid FornecedorId,
+    Guid? FornecedorId,
 
     [ValidateNever]
     List<OpcoesFornecedorViewModel> Fornecedores,
