@@ -24,12 +24,20 @@ public class Fornecedor : EntidadeBase<Fornecedor>
         Telefone = entidadeAtualizada.Telefone;
         CNPJ = entidadeAtualizada.CNPJ;
     }
-    public void AdicionarRemedioHaFornecedor(Medicamento medicamento)
+    public void AdicionarMedicamentoHaFornecedor(Medicamento medicamento)
     {
         Medicamentos.Add(medicamento);
     }
-    public void RemoverRemedioDoFornecedor(Medicamento medicamento)
+    public void RemoverMedicamentoDoFornecedor(Medicamento medicamento)
     {
         Medicamentos.Remove(medicamento);
+    }
+    public void AtualizarMedicamentoDoFornecedor(Medicamento novoMedicamento)
+    {
+        for (int i = 0; i < Medicamentos.Count; i++)
+        {
+            if (novoMedicamento.Id == Medicamentos[i].Id)
+                Medicamentos[i] = novoMedicamento;
+        }
     }
 }

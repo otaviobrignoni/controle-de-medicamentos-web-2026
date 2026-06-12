@@ -108,16 +108,13 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpPost]
     public ActionResult Excluir(FornecedorViewModel vm)
     {
-        if (ModelState.IsValid)
-            return View(vm);
-
         var resultado = servicoFornecedor.Excluir(vm.Id);
 
         if (resultado.IsFailed)
         {
-            ModelState.AddModelError(resultado);
+            TempData.AddErrorMessage(resultado);
 
-            return View(vm);
+            return RedirectToAction(nameof(Listar));
         }
 
         return RedirectToAction(nameof(Listar));

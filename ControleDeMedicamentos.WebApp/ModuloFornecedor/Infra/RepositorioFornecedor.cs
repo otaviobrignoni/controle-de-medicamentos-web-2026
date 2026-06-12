@@ -9,7 +9,6 @@ public class RepositorioFornecedor : RepositorioBase<Fornecedor>, IRepositorioFo
     public RepositorioFornecedor(ContextoJson contexto) : base(contexto)
     {
     }
-
     protected override List<Fornecedor> CarregarRegistros()
     {
         return contexto.Fornecedores;

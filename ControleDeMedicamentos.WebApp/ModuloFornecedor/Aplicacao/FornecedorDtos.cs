@@ -1,5 +1,3 @@
-using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
-
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 
 public record FornecedorDto
@@ -7,6 +5,6 @@ public record FornecedorDto
     string Nome,
     string Telefone,
     string CNPJ,
-    int QtdMedicamentos,
+    int Medicamentos,
     Guid Id = new Guid()
 );

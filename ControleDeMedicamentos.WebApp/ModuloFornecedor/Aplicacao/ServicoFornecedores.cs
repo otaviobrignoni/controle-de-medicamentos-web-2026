@@ -42,13 +42,13 @@ public class ServicoFornecedor
 
     public Result Excluir(Guid id)
     {
+        if (repositorioFornecedor?.Selecionar(id)?.Medicamentos.Count != 0)
+            return Result.Fail("Fornecedor tem Medicamentos Cadastrados a ele");
+
         bool conseguiuExcluir = repositorioFornecedor.Excluir(id);
 
         if (!conseguiuExcluir)
             return Result.Fail("Fornecedor não encontrado");
-
-        if (repositorioFornecedor.Selecionar(id)!.Medicamentos.Any())
-            return Result.Fail("Fornecedor tem Medicamentos Cadastrados a ele");
 
         return Result.Ok();
     }
