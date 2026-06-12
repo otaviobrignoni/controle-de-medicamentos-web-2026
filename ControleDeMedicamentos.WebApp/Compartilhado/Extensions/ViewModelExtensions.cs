@@ -5,12 +5,12 @@ namespace ControleDeMedicamentos.WebApp.Compartilhado.Extensions;
 
 public static class ViewModelExtensions
 {
-    public static FormFieldViewModel ConvertToFormField<TModel>(this TModel model, Expression<Func<TModel, string>> expression, string? label = null)
+    public static FormFieldViewModel ConvertToFormField<TModel>(this TModel model, Expression<Func<TModel, string>> expression, string type, string? label = null)
     {
         var name = GetMemberName(expression.Body) ?? throw new ArgumentException($"Could not determine the field name from expression '{expression}'.", nameof(expression)); ;
         var value = expression.Compile()(model);
 
-        return new FormFieldViewModel(name, label ?? name, value, "text");
+        return new FormFieldViewModel(name, label ?? name, value, type);
     }
 
     public static DisplayFieldViewModel DisplayField<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> expression, string? label = null)
