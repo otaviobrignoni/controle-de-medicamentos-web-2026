@@ -10,18 +10,14 @@ public class Medicamento : EntidadeBase<Medicamento>
     public int Quantidade { get; set; } = 0;
     public Fornecedor Fornecedor { get; set; } = null!;
 
-    public Medicamento()
-    {
-    }
+    public Medicamento() { }
 
-    public Medicamento(string nome, string descricao, int quantidade, Fornecedor fornecedor, bool cadastraEmFornecedor = true)
+    public Medicamento(string nome, string descricao, int quantidade, Fornecedor fornecedor)
     {
         Nome = nome;
         Descricao = descricao;
         Quantidade = quantidade;
         Fornecedor = fornecedor;
-        if (cadastraEmFornecedor)
-            fornecedor.AdicionarMedicamentoHaFornecedor(this);
     }
     public override void Atualizar(Medicamento entidadeAtualizada)
     {
@@ -30,17 +26,9 @@ public class Medicamento : EntidadeBase<Medicamento>
         Quantidade = entidadeAtualizada.Quantidade;
         if (Fornecedor != entidadeAtualizada.Fornecedor)
         {
-            Fornecedor.RemoverMedicamentoDoFornecedor(this);
-
+            Fornecedor.RemoverMedicamento(this);
             Fornecedor = entidadeAtualizada.Fornecedor;
-
-            entidadeAtualizada.Fornecedor.AdicionarMedicamentoHaFornecedor(this);
-        }
-        else
-        {
-            Fornecedor = entidadeAtualizada.Fornecedor;
-
-            Fornecedor.AtualizarMedicamentoDoFornecedor(this);
+            Fornecedor.AdicionarMedicamento(this);
         }
     }
 }

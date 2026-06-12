@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
@@ -7,11 +6,11 @@ namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao;
 public record MedicamentoViewModel
 (
     [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido")]
-    [StringLength(100, MinimumLength =3, ErrorMessage =" O campo \"Nome\" deve conter entre 3 a 100 digitos")]
+    [StringLength(100, MinimumLength = 3, ErrorMessage =" O campo \"Nome\" deve conter entre 3 a 100 digitos")]
     string Nome,
 
     [Required(ErrorMessage = "O campo \"Descrição\" deve ser preenchido")]
-    [StringLength(255, MinimumLength =5, ErrorMessage =" O campo \"Descrição\" deve conter entre 5 a 255 digitos")]
+    [StringLength(255, MinimumLength = 5, ErrorMessage =" O campo \"Descrição\" deve conter entre 5 a 255 digitos")]
     string Descricao,
 
     int Quantidade,
@@ -24,6 +23,7 @@ public record MedicamentoViewModel
 
     Guid Id = default
 );
+
 public record MedicamentoMostrarViewModel
 (
     string Nome,
@@ -36,6 +36,7 @@ public record MedicamentoMostrarViewModel
 
     Guid Id = default
 );
+
 public record OpcoesFornecedorViewModel
 (
     Guid Id,

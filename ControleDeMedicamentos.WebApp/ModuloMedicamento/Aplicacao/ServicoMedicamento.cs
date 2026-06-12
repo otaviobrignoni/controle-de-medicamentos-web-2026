@@ -1,21 +1,14 @@
-using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
+using AutoMapper;
+using ControleDeMedicamentos.WebApp.Compartilhado.Extensions;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
 using FluentResults;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Aplicacao;
 
-public class ServicoMedicamento
+public class ServicoMedicamento(IRepositorioFornecedor repositorioFornecedor, IRepositorioMedicamento repositorioMedicamento, IMapper mapeador)
 {
-    readonly IRepositorioFornecedor repositorioFornecedor;
-    readonly IRepositorioMedicamento repositorioMedicamento;
-    public ServicoMedicamento(IRepositorioFornecedor repositorioFornecedor, IRepositorioMedicamento repositorioMedicamento)
-    {
-        this.repositorioFornecedor = repositorioFornecedor;
-        this.repositorioMedicamento = repositorioMedicamento;
-    }
-
-    public Result Cadastrar(CadastrarMedicamentoDto dto)
+    public Result Cadastrar(MedicamentoDto dto)
     {
         if (repositorioMedicamento.Registros.Any(f => string.Equals(f.Nome, dto.Nome)))
             return Falha("Nome", "Esse medicamento já existe no programa");
@@ -25,26 +18,27 @@ public class ServicoMedicamento
         if (fornecedor is null)
             return Falha("Fornecedor", "O \"Fornecedor\" e possivelmente nulo");
 
-        Medicamento novoMedicamento = new(dto.Nome, dto.Descricao, dto.Quantidade, fornecedor);
+        Medicamento novoMedicamento = mapeador.MapWith<Medicamento>(dto, ("fornecedor", fornecedor));
+        fornecedor.AdicionarMedicamento(novoMedicamento);
 
         repositorioMedicamento.Cadastrar(novoMedicamento);
 
         return Result.Ok();
     }
 
-    public Result Editar(EditarMedicamentoDto dto)
+    public Result Editar(MedicamentoDto dto)
     {
         if (repositorioMedicamento.Selecionar(m => m.Id != dto.Id).Any(f => string.Equals(f.Nome, dto.Nome)))
-            return Falha("Nome", "Já existe um Paciente com esse cartaoSUS");
+            return Falha("Nome", "Já existe um medicamento com esse nome");
 
         Fornecedor? fornecedor = repositorioFornecedor.Selecionar(dto.FornecedorId);
 
         if (fornecedor is null)
             return Falha("Fornecedor", "O \"Fornecedor\" e possivelmente nulo");
 
-        Medicamento pacienteEditado = new(dto.Nome, dto.Descricao, dto.Quantidade, fornecedor, false);
+        Medicamento medicamentoEditado = mapeador.MapWith<Medicamento>(dto, ("fornecedor", fornecedor));
 
-        bool conseguiuEditar = repositorioMedicamento.Editar(dto.Id, pacienteEditado);
+        bool conseguiuEditar = repositorioMedicamento.Editar(dto.Id, medicamentoEditado);
 
         if (!conseguiuEditar)
             return Result.Fail("Ocorreu um erro ao Medicamento ao ser editado");
@@ -59,27 +53,25 @@ public class ServicoMedicamento
         if (medicamento is null)
             return Result.Fail("O medicamento não foi encontrado");
 
-        medicamento.Fornecedor.RemoverMedicamentoDoFornecedor(medicamento);
+        medicamento.Fornecedor.RemoverMedicamento(medicamento);
 
         repositorioMedicamento.Excluir(medicamento);
 
         return Result.Ok();
     }
 
-    public List<ListarMedicamentoDto> SelecionarTodosListagem()
+    public List<MostrarMedicamentoDto> SelecionarTodosListagem()
     {
-        return repositorioMedicamento.Selecionar().Select(m => new ListarMedicamentoDto(m.Nome, m.Descricao, m.Quantidade,
-                                                                                        m.Fornecedor.Nome, m.Id)).ToList();
+        return repositorioMedicamento.Registros.Select(mapeador.Map<MostrarMedicamentoDto>).ToList();
     }
-    public Result<DetalhesMedicamentoDto> SelecionarPorId(Guid id)
+    public Result<MedicamentoDto> SelecionarPorId(Guid id)
     {
         Medicamento? m = repositorioMedicamento.Selecionar(id);
 
         if (m is null)
             return Result.Fail("O medicamento possivelmente e nulo");
 
-        return Result.Ok(new DetalhesMedicamentoDto(m.Nome, m.Descricao, m.Quantidade, m.Fornecedor.Id,
-                                                 m.Fornecedor.Nome, m.Fornecedor.Telefone, m.Fornecedor.CNPJ, m.Id));
+        return Result.Ok(mapeador.Map<MedicamentoDto>(m));
     }
     private static Result Falha(string campo, string mensagem)
     {

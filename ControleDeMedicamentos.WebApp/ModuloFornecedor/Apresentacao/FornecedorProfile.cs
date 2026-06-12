@@ -10,6 +10,5 @@ public class FornecedorProfile : Profile
     {
         CreateMap<FornecedorDto, FornecedorViewModel>();
         CreateMap<FornecedorViewModel, FornecedorDto>();
-        CreateMap<FornecedorDto, OpcoesFornecedorViewModel>();
     }
 }
