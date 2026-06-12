@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Titulo = "Exclusão de Funcionário";
     var fields = new[] {
-        Model.DisplayField(x => x.Id, "ID"),
-        Model.DisplayField(x => x.Nome),
-        Model.DisplayField(x => x.Telefone),
-        Model.DisplayField(x => x.Cpf, "CPF")
+        Model.DisplayField(vm => vm.Id, "ID"),
+        Model.DisplayField(vm => vm.Nome),
+        Model.DisplayField(vm => vm.Telefone),
+        Model.DisplayField(vm => vm.Cpf, "CPF")
     };
 }
 

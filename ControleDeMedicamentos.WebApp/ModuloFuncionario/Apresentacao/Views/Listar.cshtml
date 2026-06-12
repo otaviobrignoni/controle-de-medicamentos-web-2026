@@ -20,13 +20,13 @@ else
         @foreach (var f in Model)
         {
             var fields = new[] {
-                f.DisplayField(x => x.Telefone),
-                f.DisplayField(x => x.Cpf, "CPF")
+                f.DisplayField(vm => vm.Telefone),
+                f.DisplayField(vm => vm.Cpf, "CPF")
             };
             <div class="col">
                 <div class="card h-100">
                     <div class="card-body">
-                        <partial name="_CardTitulo" model="@f.DisplayField((x => x.Id.ToShortString()), f.Nome)" />
+                        <partial name="_CardTitulo" model="@f.DisplayField(vm => vm.Id.ToShortString(), f.Nome)" />
 
                         <partial name="_CardCampos" model="@fields" />
 
