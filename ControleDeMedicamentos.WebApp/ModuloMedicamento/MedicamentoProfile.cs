@@ -16,7 +16,7 @@ public class MedicamentoProfile : Profile
             .ForCtorParam(nameof(MedicamentoDto.FornecedorId), opt => opt.MapFrom(src => src.FornecedorId!.Value));
         // Aplicação -> Apresentação
         CreateMap<MedicamentoDto, MedicamentoViewModel>()
-            .ForMember(dest => dest.Fornecedores, opt => opt.MapFromContext("fornecedores"));
+            .ForCtorParam(nameof(MedicamentoViewModel.Fornecedores), opt => opt.MapFrom((src, ctx) => (List<OpcoesFornecedorViewModel>)ctx.Items["fornecedores"]));
         CreateMap<MostrarMedicamentoDto, MedicamentoMostrarViewModel>();
         CreateMap<FornecedorDto, OpcoesFornecedorViewModel>();
         // Domínio -> Aplicação
@@ -26,6 +26,7 @@ public class MedicamentoProfile : Profile
             .ForMember(dest => dest.FornecedorNome, opt => opt.MapFrom(src => src.Fornecedor.Nome));
         // Aplicação -> Domínio
         CreateMap<MedicamentoDto, Medicamento>()
+            .ForMember(dest => dest.Id, opt => opt.Condition(src => src.Id != default))
             .ForMember(dest => dest.Fornecedor, opt => opt.MapFromContext("fornecedor"));
     }
 }

@@ -84,7 +84,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
     [HttpGet]
     public ActionResult Excluir(Guid id)
     {
-        var resultado = servicoMedicamento.SelecionarPorId(id);
+        var resultado = servicoMedicamento.SelecionarMostrar(id);
 
         if (resultado.IsFailed)
         {
@@ -102,9 +102,6 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
     [HttpPost]
     public ActionResult Excluir(MedicamentoMostrarViewModel vm)
     {
-        if (!ModelState.IsValid)
-            return View(vm);
-
         var resultado = servicoMedicamento.Excluir(vm.Id);
 
         if (resultado.IsFailed)
@@ -119,7 +116,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
     [HttpGet]
     public ActionResult Detalhes(Guid id)
     {
-        var resultado = servicoMedicamento.SelecionarPorId(id);
+        var resultado = servicoMedicamento.SelecionarMostrar(id);
 
         if (resultado.IsFailed)
         {

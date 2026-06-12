@@ -73,6 +73,17 @@ public class ServicoMedicamento(IRepositorioFornecedor repositorioFornecedor, IR
 
         return Result.Ok(mapeador.Map<MedicamentoDto>(m));
     }
+
+    public Result<MostrarMedicamentoDto> SelecionarMostrar(Guid id)
+    {
+        Medicamento? m = repositorioMedicamento.Selecionar(id);
+
+        if (m is null)
+            return Result.Fail("O medicamento possivelmente e nulo");
+
+        return Result.Ok(mapeador.Map<MostrarMedicamentoDto>(m));
+    }
+    
     private static Result Falha(string campo, string mensagem)
     {
         return Result.Fail(new Error(mensagem).WithMetadata("Campo", campo));
