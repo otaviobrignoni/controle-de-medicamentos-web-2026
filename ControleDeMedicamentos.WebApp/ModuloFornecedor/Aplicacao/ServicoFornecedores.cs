@@ -42,6 +42,9 @@ public class ServicoFornecedor
 
     public Result Excluir(Guid id)
     {
+        if (repositorioFornecedor?.Selecionar(id)?.Medicamentos.Count != 0)
+            return Result.Fail("Fornecedor tem Medicamentos Cadastrados a ele");
+
         bool conseguiuExcluir = repositorioFornecedor.Excluir(id);
 
         if (!conseguiuExcluir)
@@ -52,7 +55,7 @@ public class ServicoFornecedor
 
     public List<FornecedorDto> SelecionarTodos()
     {
-        return repositorioFornecedor.Selecionar().Select(f => new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Id)).ToList();
+        return repositorioFornecedor.Selecionar().Select(f => new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Medicamentos.Count, f.Id)).ToList();
     }
 
     public Result<FornecedorDto> SelecionarPorId(Guid id)
@@ -62,7 +65,7 @@ public class ServicoFornecedor
         if (f is null)
             return Result.Fail("Fornecedor não encontrado");
 
-        return Result.Ok(new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Id));
+        return Result.Ok(new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Medicamentos.Count, f.Id));
     }
 
     private static Result Falha(string campo, string mensagem)

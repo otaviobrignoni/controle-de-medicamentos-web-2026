@@ -1,3 +1,4 @@
+using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
 using FluentResults;
@@ -24,9 +25,9 @@ public class ServicoMedicamento
         if (fornecedor is null)
             return Falha("Fornecedor", "O \"Fornecedor\" e possivelmente nulo");
 
-        Medicamento novoPaciente = new(dto.Nome, dto.Descricao, dto.Quantidade, fornecedor);
+        Medicamento novoMedicamento = new(dto.Nome, dto.Descricao, dto.Quantidade, fornecedor);
 
-        repositorioMedicamento.Cadastrar(novoPaciente);
+        repositorioMedicamento.Cadastrar(novoMedicamento);
 
         return Result.Ok();
     }
@@ -41,7 +42,7 @@ public class ServicoMedicamento
         if (fornecedor is null)
             return Falha("Fornecedor", "O \"Fornecedor\" e possivelmente nulo");
 
-        Medicamento pacienteEditado = new(dto.Nome, dto.Descricao, dto.Quantidade, fornecedor);
+        Medicamento pacienteEditado = new(dto.Nome, dto.Descricao, dto.Quantidade, fornecedor, false);
 
         bool conseguiuEditar = repositorioMedicamento.Editar(dto.Id, pacienteEditado);
 
@@ -53,10 +54,14 @@ public class ServicoMedicamento
 
     public Result Excluir(Guid id)
     {
-        bool conseguiuExcluir = repositorioMedicamento.Excluir(id);
+        Medicamento? medicamento = repositorioMedicamento.Selecionar(id);
 
-        if (!conseguiuExcluir)
+        if (medicamento is null)
             return Result.Fail("O medicamento não foi encontrado");
+
+        medicamento.Fornecedor.RemoverMedicamentoDoFornecedor(medicamento);
+
+        repositorioMedicamento.Excluir(medicamento);
 
         return Result.Ok();
     }
