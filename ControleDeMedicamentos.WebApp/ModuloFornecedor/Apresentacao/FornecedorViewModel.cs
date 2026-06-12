@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao;
 
@@ -15,6 +17,8 @@ public record FornecedorViewModel
     [Required(ErrorMessage ="O campo \"CNPJ\" deve ser preenchido")]
     [RegularExpression(@"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$",ErrorMessage = "O campo \"CNPJ\" deve estar no formato xx.xxx.xxx/xxxx-xx")]
     string CNPJ,
+
+    int Medicamentos,
 
     Guid Id = new Guid()
 );

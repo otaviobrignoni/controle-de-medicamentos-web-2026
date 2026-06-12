@@ -4,5 +4,4 @@ namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 
 public interface IRepositorioFornecedor : IRepositorio<Fornecedor>
 {
-
 }
