@@ -23,6 +23,15 @@ public static class ViewModelExtensions
         return new((label ?? name)!, value);
     }
 
+    public static DisplayFieldViewModel DisplayField<TModel, TValue>(this TModel model, Expression<Func<TModel, TValue>> expression, object? value, string? label = null)
+    {
+        var name = GetMemberName(expression.Body);
+        if (name is null && label is null)
+            throw new ArgumentException($"Could not determine the field name from expression '{expression}'. Provide the label explicitly.", nameof(expression));
+
+        return new((label ?? name)!, value);
+    }
+
     private static string? GetMemberName(Expression expression)
     {
         return expression switch
