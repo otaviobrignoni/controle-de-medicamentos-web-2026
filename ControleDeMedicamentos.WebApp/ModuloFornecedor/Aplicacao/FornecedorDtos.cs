@@ -6,5 +6,5 @@ public record FornecedorDto
     string Telefone,
     string CNPJ,
     int Medicamentos,
-    Guid Id = new Guid()
+    Guid Id = default
 );

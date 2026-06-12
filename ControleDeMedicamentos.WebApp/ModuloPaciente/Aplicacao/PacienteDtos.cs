@@ -6,5 +6,5 @@ public record PacienteDto
     string Telefone,
     string CartaoSUS,
     string CPF,
-    Guid Id = new Guid()
+    Guid Id = default
 );

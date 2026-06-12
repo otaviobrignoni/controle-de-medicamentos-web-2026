@@ -20,5 +20,5 @@ public record PacienteViewModel
     [RegularExpression(@"^\d{3}\.\d{3}\.\d{3}-\d{2}$",ErrorMessage = "O campo \"CPF\" deve estar no formato xxx.xxx.xxx-xx")]
     string CPF,
 
-    Guid Id = new Guid()
+    Guid Id = default
 );

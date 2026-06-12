@@ -20,5 +20,5 @@ public record FornecedorViewModel
 
     int Medicamentos,
 
-    Guid Id = new Guid()
+    Guid Id = default
 );

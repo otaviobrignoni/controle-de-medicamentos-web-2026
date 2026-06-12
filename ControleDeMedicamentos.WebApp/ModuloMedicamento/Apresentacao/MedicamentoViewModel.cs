@@ -22,7 +22,7 @@ public record MedicamentoViewModel
     [ValidateNever]
     List<OpcoesFornecedorViewModel> Fornecedores,
 
-    Guid Id = new Guid()
+    Guid Id = default
 );
 public record MedicamentoMostrarViewModel
 (
@@ -34,7 +34,7 @@ public record MedicamentoMostrarViewModel
 
     string FornecedorNome,
 
-    Guid Id = new Guid()
+    Guid Id = default
 );
 public record OpcoesFornecedorViewModel
 (
