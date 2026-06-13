@@ -4,20 +4,14 @@ using FluentResults;
 
 namespace ControleDeMedicamentos.WebApp.ModuloPaciente.Aplicacao;
 
-public class ServicoPaciente
+public class ServicoPaciente(IRepositorioPaciente repositorioPaciente, IMapper mapeador)
 {
-    readonly IRepositorioPaciente repositorioPaciente;
-
-    public ServicoPaciente(IRepositorioPaciente repositorioPaciente)
-    {
-        this.repositorioPaciente = repositorioPaciente;
-    }
     public Result Cadastrar(PacienteDto dto)
     {
         if (repositorioPaciente.Registros.Any(f => string.Equals(f.CartaoSUS, dto.CartaoSUS)))
             return Falha("CartaoSUS", "Já existe um Paciente com esse cartaoSUS");
 
-        Paciente novoPaciente = new(dto.Nome, dto.Telefone, dto.CartaoSUS, dto.CPF);
+        Paciente novoPaciente = mapeador.Map<Paciente>(dto);
 
         repositorioPaciente.Cadastrar(novoPaciente);
 
@@ -29,7 +23,7 @@ public class ServicoPaciente
         if (repositorioPaciente.Selecionar(f => f.Id != dto.Id).Any(f => string.Equals(f.CartaoSUS, dto.CartaoSUS)))
             return Falha("CartaoSUS", "Já existe um Paciente com esse cartaoSUS");
 
-        Paciente pacienteEditado = new(dto.Nome, dto.Telefone, dto.CartaoSUS, dto.CPF);
+        Paciente pacienteEditado = mapeador.Map<Paciente>(dto);
 
         bool conseguiuEditar = repositorioPaciente.Editar(dto.Id, pacienteEditado);
 
@@ -51,7 +45,7 @@ public class ServicoPaciente
 
     public List<PacienteDto> SelecionarTodos()
     {
-        return repositorioPaciente.Selecionar().Select(f => new PacienteDto(f.Nome, f.Telefone, f.CartaoSUS, f.CPF, f.Id)).ToList();
+        return mapeador.Map<List<PacienteDto>>(repositorioPaciente.Selecionar());
     }
 
     public Result<PacienteDto> SelecionarPorId(Guid id)
@@ -61,7 +55,7 @@ public class ServicoPaciente
         if (p is null)
             return Result.Fail("Paciente não encontrado");
 
-        return Result.Ok(new PacienteDto(p.Nome, p.Telefone, p.CartaoSUS, p.CPF, p.Id));
+        return Result.Ok(mapeador.Map<PacienteDto>(p));
     }
 
     private static Result Falha(string campo, string mensagem)

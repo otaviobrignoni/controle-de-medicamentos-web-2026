@@ -1,0 +1,12 @@
+@model PacienteViewModel
+<partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.Nome, "text")" />
+<span asp-validation-for="@Model.Nome" class="text-danger small fw-semibold"></span>
+
+<partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.Telefone, "text")" />
+<span asp-validation-for="@Model.Telefone" class="text-danger small fw-semibold"></span>
+
+<partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.CartaoSUS, "text", "Cartão do SUS")" />
+<span asp-validation-for="@Model.CartaoSUS" class="text-danger small fw-semibold"></span>
+
+<partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.CPF, "text", "CPF")" />
+<span asp-validation-for="@Model.CPF" class="text-danger small fw-semibold"></span>
