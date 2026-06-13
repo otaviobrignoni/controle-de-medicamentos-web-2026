@@ -3,6 +3,6 @@ namespace ControleDeMedicamentos.WebApp.Compartilhado.Models;
 public record FormFieldViewModel(
     string Name,
     string Label,
-    string Value,
+    object? Value,
     string Type
 );
