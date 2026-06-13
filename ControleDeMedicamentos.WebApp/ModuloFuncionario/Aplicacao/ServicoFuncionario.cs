@@ -1,16 +1,17 @@
+using AutoMapper;
 using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
 using FluentResults;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFuncionario.Aplicacao;
 
-public class ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario)
+public class ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario, IMapper mapeador)
 {
     public Result Cadastrar(FuncionarioDto dto)
     {
         if (CpfJaExiste(dto.Cpf))
             return Falha("Cpf", "Já existe um funcionário com este CPF.");
 
-        var funcionario = new Funcionario(dto.Nome, dto.Telefone, dto.Cpf);
+        var funcionario = mapeador.Map<Funcionario>(dto);
 
         repositorioFuncionario.Cadastrar(funcionario);
 
@@ -22,7 +23,7 @@ public class ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario)
         if (CpfJaExiste(dto.Cpf, dto.Id))
             return Falha("Cpf", "Já existe um funcionário com este CPF.");
 
-        var funcionarioEditado = new Funcionario(dto.Nome, dto.Telefone, dto.Cpf);
+        var funcionarioEditado = mapeador.Map<Funcionario>(dto);
 
         if (!repositorioFuncionario.Editar(dto.Id, funcionarioEditado))
             return Result.Fail("Funcionario não encontrado");
@@ -44,7 +45,7 @@ public class ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario)
 
     public List<FuncionarioDto> Selecionar()
     {
-        return repositorioFuncionario.Registros.Select(f => new FuncionarioDto(f.Nome, f.Telefone, f.Cpf, f.Id)).ToList();
+        return mapeador.Map<List<FuncionarioDto>>(repositorioFuncionario.Registros);
     }
 
     public Result<FuncionarioDto> Selecionar(Guid id)
@@ -54,7 +55,7 @@ public class ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario)
         if (funcionario is null)
             return Result.Fail("Funcionario não encontrado");
 
-        return Result.Ok(new FuncionarioDto(funcionario.Nome, funcionario.Telefone, funcionario.Cpf, funcionario.Id));
+        return Result.Ok(mapeador.Map<FuncionarioDto>(funcionario));
     }
 
     private bool CpfJaExiste(string cpf, Guid id = default)
