@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Apresentacao;
 
-public record DetalhesEntradaViewModel(
+public record MostrarEntradaViewModel(
     Guid Id,
     DateTime Data,
     string Medicamento,
@@ -12,14 +12,14 @@ public record DetalhesEntradaViewModel(
     string Funcionario
 );
 
-public record DetalhesSaidaViewModel(
+public record MostrarSaidaViewModel(
     Guid Id,
     DateTime Data,
     string Paciente,
-    List<ItemSaidaViewModel> Itens
+    List<MostrarItemSaidaViewModel> Itens
 );
 
-public record CadastrarEntradaViewModel(
+public record EntradaViewModel(
     [Required(ErrorMessage = "O campo \"Medicamento\" deve ser preenchido.")]
     Guid? MedicamentoId,
 
@@ -37,12 +37,12 @@ public record CadastrarEntradaViewModel(
     List<SelectListItem> Funcionarios
 );
 
-public record CadastrarSaidaViewModel(
+public record SaidaViewModel(
     [Required(ErrorMessage = "O campo \"Paciente\" deve ser preenchido.")]
     Guid? PacienteId,
 
     [MinLength(1, ErrorMessage = "Adicione pelo menos um medicamento.")]
-    List<CadastrarItemSaidaViewModel> Itens,
+    List<ItemSaidaViewModel> Itens,
 
     [ValidateNever]
     List<SelectListItem> Pacientes,
@@ -52,7 +52,7 @@ public record CadastrarSaidaViewModel(
 
 );
 
-public record CadastrarItemSaidaViewModel(
+public record ItemSaidaViewModel(
     [Required(ErrorMessage = "O campo \"Medicamento\" deve ser preenchido.")]
     Guid? MedicamentoId,
 
@@ -60,7 +60,7 @@ public record CadastrarItemSaidaViewModel(
     int Quantidade
 );
 
-public record ItemSaidaViewModel(
+public record MostrarItemSaidaViewModel(
     string Medicamento,
     int Quantidade
 );

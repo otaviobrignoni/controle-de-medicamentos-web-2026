@@ -1,6 +1,22 @@
 namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 
-public record DetalhesEntradaDto(
+public record EntradaDto(
+    Guid MedicamentoId,
+    int Quantidade,
+    Guid FuncionarioId
+);
+
+public record SaidaDto(
+    Guid PacienteId,
+    List<ItemSaidaDto> Itens
+);
+
+public record ItemSaidaDto(
+    Guid MedicamentoId,
+    int Quantidade
+);
+
+public record MostrarEntradaDto(
     Guid Id,
     DateTime Data,
     string Medicamento,
@@ -8,30 +24,16 @@ public record DetalhesEntradaDto(
     string Funcionario
 );
 
-public record DetalhesSaidaDto(
+public record MostrarSaidaDto(
     Guid Id,
     DateTime Data,
     string Paciente,
-    List<ItemSaidaDto> Itens
+    List<MostrarItemSaidaDto> Itens
 );
 
-public record CadastrarEntradaDto(
-    Guid MedicamentoId,
-    int Quantidade,
-    Guid FuncionarioId
-);
-
-public record CadastrarSaidaDto(
-    Guid PacienteId,
-    List<CadastrarItemSaidaDto> Itens
-);
-
-public record ItemSaidaDto(
+public record MostrarItemSaidaDto(
     string Medicamento,
     int Quantidade
 );
 
-public record CadastrarItemSaidaDto(
-    Guid MedicamentoId,
-    int Quantidade
-);
+

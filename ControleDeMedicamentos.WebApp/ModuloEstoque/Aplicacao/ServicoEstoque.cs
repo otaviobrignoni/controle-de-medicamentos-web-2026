@@ -8,7 +8,7 @@ namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 
 public class ServicoEstoque(IRepositorioRequisicao repositorioRequisicao, IRepositorioMedicamento repositorioMedicamento, IRepositorioPaciente repositorioPaciente, IRepositorioFuncionario repositorioFuncionario)
 {
-    public Result CadastrarEntrada(CadastrarEntradaDto dto)
+    public Result CadastrarEntrada(EntradaDto dto)
     {
         var medicamento = repositorioMedicamento.Selecionar(dto.MedicamentoId);
 
@@ -25,7 +25,7 @@ public class ServicoEstoque(IRepositorioRequisicao repositorioRequisicao, IRepos
         return Result.Ok();
     }
 
-    public Result CadastrarSaida(CadastrarSaidaDto dto)
+    public Result CadastrarSaida(SaidaDto dto)
     {
         var paciente = repositorioPaciente.Selecionar(dto.PacienteId);
 
@@ -58,10 +58,10 @@ public class ServicoEstoque(IRepositorioRequisicao repositorioRequisicao, IRepos
         return Result.Ok();
     }
 
-    public List<DetalhesEntradaDto> SelecionarEntrada()
+    public List<MostrarEntradaDto> SelecionarEntrada()
     {
         return repositorioRequisicao.Entrada
-            .Select(re => new DetalhesEntradaDto(
+            .Select(re => new MostrarEntradaDto(
                 re.Id,
                 re.Data,
                 re.Medicamento.Nome,
@@ -70,15 +70,15 @@ public class ServicoEstoque(IRepositorioRequisicao repositorioRequisicao, IRepos
             .ToList();
     }
 
-    public List<DetalhesSaidaDto> SelecionarSaida()
+    public List<MostrarSaidaDto> SelecionarSaida()
     {
         return repositorioRequisicao.Saida
-            .Select(rs => new DetalhesSaidaDto(
+            .Select(rs => new MostrarSaidaDto(
                 rs.Id,
                 rs.Data,
                 rs.Paciente.Nome,
                 rs.Medicamentos
-                    .Select(iѕ => new ItemSaidaDto(iѕ.Medicamento.Nome, iѕ.Quantidade)) // esse "iѕ" ta amaldiçoado 
+                    .Select(iѕ => new MostrarItemSaidaDto(iѕ.Medicamento.Nome, iѕ.Quantidade)) // esse "iѕ" ta amaldiçoado 
                     .ToList()))
             .ToList();
     }

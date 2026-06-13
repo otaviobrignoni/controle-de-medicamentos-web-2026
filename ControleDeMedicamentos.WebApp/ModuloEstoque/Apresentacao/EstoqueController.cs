@@ -7,101 +7,100 @@ using ControleDeMedicamentos.WebApp.ModuloPaciente.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Apresentacao
+namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Apresentacao;
+
+public class EstoqueController(ServicoEstoque servicoEstoque, ServicoMedicamento servicoMedicamento, ServicoPaciente servicoPaciente, ServicoFuncionario servicoFuncionario, IMapper mapeador) : Controller
 {
-    public class EstoqueController(ServicoEstoque servicoEstoque, ServicoMedicamento servicoMedicamento, ServicoPaciente servicoPaciente, ServicoFuncionario servicoFuncionario, IMapper mapeador) : Controller
+    [HttpGet]
+    public ActionResult Listar()
     {
-        [HttpGet]
-        public ActionResult Listar()
+        var dtosEntrada = servicoEstoque.SelecionarEntrada();
+        var dtosSaida = servicoEstoque.SelecionarSaida();
+
+        var vms = (
+            mapeador.Map<List<MostrarEntradaViewModel>>(dtosEntrada),
+            mapeador.Map<List<MostrarSaidaViewModel>>(dtosSaida)
+        );
+
+        return View(vms);
+    }
+
+    [HttpGet]
+    public ActionResult Cadastrar()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public ActionResult CadastrarEntrada()
+    {
+        var vm = new EntradaViewModel(null, 0, null, SelecionarMedicamentos(), SelecionarFuncionarios());
+        return View(vm);
+    }
+
+    [HttpPost]
+    public ActionResult CadastrarEntrada(EntradaViewModel vm)
+    {
+        if (!ModelState.IsValid)
+            return View(vm with { Medicamentos = SelecionarMedicamentos(), Funcionarios = SelecionarFuncionarios() });
+
+        var dto = mapeador.Map<EntradaDto>(vm);
+
+        var resultado = servicoEstoque.CadastrarEntrada(dto);
+
+        if (resultado.IsFailed)
         {
-            var dtosEntrada = servicoEstoque.SelecionarEntrada();
-            var dtosSaida = servicoEstoque.SelecionarSaida();
-
-            var vms = (
-                mapeador.Map<List<DetalhesEntradaViewModel>>(dtosEntrada),
-                mapeador.Map<List<DetalhesSaidaViewModel>>(dtosSaida)
-            );
-
-            return View(vms);
+            ModelState.AddModelError(resultado);
+            return View(vm with { Medicamentos = SelecionarMedicamentos(), Funcionarios = SelecionarFuncionarios() });
         }
 
-        [HttpGet]
-        public ActionResult Cadastrar()
+        return RedirectToAction(nameof(Listar));
+    }
+
+    [HttpGet]
+    public ActionResult CadastrarSaida()
+    {
+        var vm = new SaidaViewModel(null, [new(null, 1)], SelecionarPacientes(), SelecionarMedicamentos());
+        return View(vm);
+    }
+
+    [HttpPost]
+    public ActionResult CadastrarSaida(SaidaViewModel vm)
+    {
+        if (!ModelState.IsValid)
+            return View(vm with { Pacientes = SelecionarPacientes(), Medicamentos = SelecionarMedicamentos() });
+
+        var dto = mapeador.Map<SaidaDto>(vm);
+
+        var resultado = servicoEstoque.CadastrarSaida(dto);
+
+        if (resultado.IsFailed)
         {
-            return View();
+            ModelState.AddModelError(resultado);
+            return View(vm with { Pacientes = SelecionarPacientes(), Medicamentos = SelecionarMedicamentos() });
         }
 
-        [HttpGet]
-        public ActionResult CadastrarEntrada()
-        {
-            var vm = new CadastrarEntradaViewModel(null, 0, null, SelecionarMedicamentos(), SelecionarFuncionarios());
-            return View(vm);
-        }
+        return RedirectToAction(nameof(Listar));
+    }
 
-        [HttpPost]
-        public ActionResult CadastrarEntrada(CadastrarEntradaViewModel vm)
-        {
-            if (!ModelState.IsValid)
-                return View(vm with { Medicamentos = SelecionarMedicamentos(), Funcionarios = SelecionarFuncionarios() });
+    private List<SelectListItem> SelecionarMedicamentos()
+    {
+        var dtos = servicoMedicamento.SelecionarTodosListagem();
 
-            var dto = mapeador.Map<CadastrarEntradaDto>(vm);
+        return mapeador.Map<List<SelectListItem>>(dtos);
+    }
 
-            var resultado = servicoEstoque.CadastrarEntrada(dto);
+    private List<SelectListItem> SelecionarPacientes()
+    {
+        var dtos = servicoPaciente.SelecionarTodos();
 
-            if (resultado.IsFailed)
-            {
-                ModelState.AddModelError(resultado);
-                return View(vm with { Medicamentos = SelecionarMedicamentos(), Funcionarios = SelecionarFuncionarios() });
-            }
+        return mapeador.Map<List<SelectListItem>>(dtos);
+    }
 
-            return RedirectToAction(nameof(Listar));
-        }
+    private List<SelectListItem> SelecionarFuncionarios()
+    {
+        var dtos = servicoFuncionario.Selecionar();
 
-        [HttpGet]
-        public ActionResult CadastrarSaida()
-        {
-            var vm = new CadastrarSaidaViewModel(null, [new(null, 1)], SelecionarPacientes(), SelecionarMedicamentos());
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult CadastrarSaida(CadastrarSaidaViewModel vm)
-        {
-            if (!ModelState.IsValid)
-                return View(vm with { Pacientes = SelecionarPacientes(), Medicamentos = SelecionarMedicamentos() });
-
-            var dto = mapeador.Map<CadastrarSaidaDto>(vm);
-
-            var resultado = servicoEstoque.CadastrarSaida(dto);
-
-            if (resultado.IsFailed)
-            {
-                ModelState.AddModelError(resultado);
-                return View(vm with { Pacientes = SelecionarPacientes(), Medicamentos = SelecionarMedicamentos() });
-            }
-
-            return RedirectToAction(nameof(Listar));
-        }
-
-        private List<SelectListItem> SelecionarMedicamentos()
-        {
-            var dtos = servicoMedicamento.SelecionarTodosListagem();
-
-            return mapeador.Map<List<SelectListItem>>(dtos);
-        }
-
-        private List<SelectListItem> SelecionarPacientes()
-        {
-            var dtos = servicoPaciente.SelecionarTodos();
-
-            return mapeador.Map<List<SelectListItem>>(dtos);
-        }
-
-        private List<SelectListItem> SelecionarFuncionarios()
-        {
-            var dtos = servicoFuncionario.Selecionar();
-
-            return mapeador.Map<List<SelectListItem>>(dtos);
-        }
+        return mapeador.Map<List<SelectListItem>>(dtos);
     }
 }
