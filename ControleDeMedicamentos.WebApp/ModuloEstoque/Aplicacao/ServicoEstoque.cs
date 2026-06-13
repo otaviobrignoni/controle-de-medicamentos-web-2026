@@ -1,3 +1,4 @@
+using AutoMapper;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
@@ -6,7 +7,7 @@ using FluentResults;
 
 namespace ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 
-public class ServicoEstoque(IRepositorioRequisicao repositorioRequisicao, IRepositorioMedicamento repositorioMedicamento, IRepositorioPaciente repositorioPaciente, IRepositorioFuncionario repositorioFuncionario)
+public class ServicoEstoque(IRepositorioRequisicao repositorioRequisicao, IRepositorioMedicamento repositorioMedicamento, IRepositorioPaciente repositorioPaciente, IRepositorioFuncionario repositorioFuncionario, IMapper mapeador)
 {
     public Result CadastrarEntrada(EntradaDto dto)
     {
@@ -60,27 +61,12 @@ public class ServicoEstoque(IRepositorioRequisicao repositorioRequisicao, IRepos
 
     public List<MostrarEntradaDto> SelecionarEntrada()
     {
-        return repositorioRequisicao.Entrada
-            .Select(re => new MostrarEntradaDto(
-                re.Id,
-                re.Data,
-                re.Medicamento.Nome,
-                re.Quantidade,
-                re.Funcionario.Nome))
-            .ToList();
+        return mapeador.Map<List<MostrarEntradaDto>>(repositorioRequisicao.Entrada);
     }
 
     public List<MostrarSaidaDto> SelecionarSaida()
     {
-        return repositorioRequisicao.Saida
-            .Select(rs => new MostrarSaidaDto(
-                rs.Id,
-                rs.Data,
-                rs.Paciente.Nome,
-                rs.Medicamentos
-                    .Select(iѕ => new MostrarItemSaidaDto(iѕ.Medicamento.Nome, iѕ.Quantidade)) // esse "iѕ" ta amaldiçoado 
-                    .ToList()))
-            .ToList();
+        return mapeador.Map<List<MostrarSaidaDto>>(repositorioRequisicao.Saida);
     }
 
     private static Result Falha(string campo, string mensagem)

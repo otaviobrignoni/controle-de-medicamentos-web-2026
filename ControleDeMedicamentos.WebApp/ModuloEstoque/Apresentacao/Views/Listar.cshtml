@@ -40,7 +40,7 @@ else
                             <article class="border rounded p-3">
                                 <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mb-3">
                                     <h5 class="mb-0">Entrada @re.Data</h5>
-                                    <span class="text-secondary fw-semibold small text-break">@re.Id</span>
+                                    <span class="text-secondary fw-semibold small text-break" style="opacity: 0.5;">@re.Id.ToShortString()</span>
                                 </div>
 
                                 <dl class="row g-2 mb-0">
@@ -76,7 +76,7 @@ else
                             <article class="border rounded p-3">
                                 <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mb-3">
                                     <h5 class="mb-0">Saída @rs.Data</h5>
-                                    <span class="text-secondary fw-semibold small text-break">@rs.Id</span>
+                                    <span class="text-secondary fw-semibold small text-break" style="opacity: 0.5;">@rs.Id.ToShortString()</span>
                                 </div>
 
                                 <dl class="row g-2 mb-0">
