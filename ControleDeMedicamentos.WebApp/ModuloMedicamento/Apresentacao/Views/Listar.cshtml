@@ -4,59 +4,27 @@
 
 @model List<MedicamentoMostrarViewModel>;
 
-
-<a class="btn btn-outline-primary rounded-pill px-4 mb-3" asp-action="Cadastrar">Cadastrar Novo</a>
+<partial name="_BotaoCadastrar" />
 
 @if (TempData["MensagemErro"] is string mensagemErro)
 {
-    <div class="alert alert-danger border-start border-danger border-4 rounded-3" role="alert">
-        @mensagemErro
-    </div>
+    <partial name="_Alerta" model="@new AlertaViewModel(mensagemErro, true)" />
 }
-
 @if (Model.Count == 0)
 {
-    <div class="alert alert-primary border-start border-primary border-2 rounded-3" role="alert">
-        Nenhum Medicamento cadastrado.
-    </div>
+    <partial name="_Alerta" model="@(new AlertaViewModel("Nenhum medicamento cadastrado."))" />
 }
 else
 {
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
-        @foreach (MedicamentoMostrarViewModel f in Model)
+        @foreach (MedicamentoMostrarViewModel m in Model)
         {
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-3">
-                            <h5 class="card-title mb-0">@f.Nome.Capitalizar()</h5>
-                            <span class="text-secondary fw-semibold small" style="opacity: 0.5">@f.Id.ToString()[..8]</span>
-                        </div>
-
-                        <dl class="row g-2 mb-4">
-                            <dt class="col-6 text-secondary fw-semibold">Descrição</dt>
-                            <dd class="col-6 mb-0 text-break">@f.Descricao.Truncar(25)</dd>
-
-                            <dt class="col-6 text-secondary fw-semibold">Quantidade</dt>
-                            <dd class="col-6 mb-0 text-break">@f.Quantidade
-                                @if (f.Quantidade <= 20)
-                                {
-                                    <span class="text-danger fw-bold">!</span>
-                                }
-                            </dd>
-
-                            <dt class=" col-6 text-secondary fw-semibold">Fornecedor</dt>
-                            <dd class="col-6 mb-0 text-break">@f.FornecedorNome</dd>
-                        </dl>
-
-                        <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Editar" asp-route-id="@f.Id">Editar</a>
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Excluir" asp-route-id="@f.Id">Excluir</a>
-                            <a class="btn btn-outline-primary btn-sm rounded-pill px-3" asp-action="Detalhes" asp-route-id="@f.Id">Detalhes</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            var campos = new[] {
+                m.DisplayField(vm => vm.Descricao.Truncar(25)),
+                m.DisplayField(vm => vm.Quantidade, new HtmlString($"{m.Quantidade}{(m.Quantidade <= 20 ? " <span class=\"text-danger fw-bold\">!</span>" : string.Empty)}")),
+                m.DisplayField(vm => vm.FornecedorNome, "Fornecedor")
+            };
+            <partial name="_Card" model="(m.DisplayField(vm => vm.Id.ToShortString(), m.Nome), campos, m.Id, true)" />
         }
     </div>
 }

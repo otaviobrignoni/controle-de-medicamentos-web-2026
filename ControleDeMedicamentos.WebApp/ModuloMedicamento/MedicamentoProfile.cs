@@ -4,6 +4,7 @@ using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamento;
 
@@ -16,9 +17,11 @@ public class MedicamentoProfile : Profile
             .ForCtorParam(nameof(MedicamentoDto.FornecedorId), opt => opt.MapFrom(src => src.FornecedorId!.Value));
         // Aplicação -> Apresentação
         CreateMap<MedicamentoDto, MedicamentoViewModel>()
-            .ForCtorParam(nameof(MedicamentoViewModel.Fornecedores), opt => opt.MapFrom((src, ctx) => (List<OpcoesFornecedorViewModel>)ctx.Items["fornecedores"]));
+            .ForCtorParam(nameof(MedicamentoViewModel.Fornecedores), opt => opt.MapFromContext("fornecedores"));
+        CreateMap<FornecedorDto, SelectListItem>()
+            .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Nome))
+            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id));
         CreateMap<MostrarMedicamentoDto, MedicamentoMostrarViewModel>();
-        CreateMap<FornecedorDto, OpcoesFornecedorViewModel>();
         // Domínio -> Aplicação
         CreateMap<Medicamento, MedicamentoDto>()
             .ForMember(dest => dest.FornecedorId, opt => opt.MapFrom(src => src.Fornecedor.Id));

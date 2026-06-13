@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao;
 
@@ -19,7 +20,7 @@ public record MedicamentoViewModel
     Guid? FornecedorId,
 
     [ValidateNever]
-    List<OpcoesFornecedorViewModel> Fornecedores,
+    List<SelectListItem> Fornecedores,
 
     Guid Id = default
 );
@@ -37,8 +38,4 @@ public record MedicamentoMostrarViewModel
     Guid Id = default
 );
 
-public record OpcoesFornecedorViewModel
-(
-    Guid Id,
-    string Nome
-);
+

@@ -4,6 +4,7 @@ using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Aplicacao;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Apresentacao;
 
@@ -128,11 +129,11 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
 
         return View(vm);
     }
-    public List<OpcoesFornecedorViewModel> ObterFornecedores()
+    public List<SelectListItem> ObterFornecedores()
     {
         var dtos = servicoFornecedor.SelecionarTodos();
 
-        return dtos.Select(mapeador.Map<OpcoesFornecedorViewModel>).ToList();
+        return mapeador.Map<List<SelectListItem>>(dtos);
     }
 
     private ViewResult ViewComFornecedores(MedicamentoViewModel vm)
