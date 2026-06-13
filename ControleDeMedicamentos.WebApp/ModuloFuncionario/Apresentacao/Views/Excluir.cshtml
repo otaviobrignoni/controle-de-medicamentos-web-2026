@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Titulo = "Exclusão de Funcionário";
-    var fields = new[] {
+    var campos = new[] {
         Model.DisplayField(vm => vm.Id, "ID"),
         Model.DisplayField(vm => vm.Nome),
         Model.DisplayField(vm => vm.Telefone),
@@ -12,6 +12,6 @@
 
 <form class="card border-primary-subtle shadow-sm mx-auto p-4" style="max-width: 620px;" asp-action="Excluir" asp-route-id="@Model.Id" method="post">
     <partial name="_Alerta" model="@(new AlertaViewModel("Tem certeza que deseja excluir este funcionário?"))" />
-    <partial name="_CardCampos" model="@fields" />
+    <partial name="_CardCampos" model="@campos" />
     <partial name="_FormAcoes" />
 </form>

@@ -4,7 +4,7 @@
 
 @model List<FuncionarioViewModel>;
 
-<a class="btn btn-outline-primary rounded-pill px-4 mb-3" asp-action="Cadastrar">Cadastrar Novo</a>
+<partial name="_BotaoCadastrar" />
 
 @if (TempData["MensagemErro"] is string mensagemErro)
 {
@@ -19,21 +19,11 @@ else
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
         @foreach (var f in Model)
         {
-            var fields = new[] {
+            var campos = new[] {
                 f.DisplayField(vm => vm.Telefone),
                 f.DisplayField(vm => vm.Cpf, "CPF")
             };
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <partial name="_CardTitulo" model="@f.DisplayField(vm => vm.Id.ToShortString(), f.Nome)" />
-
-                        <partial name="_CardCampos" model="@fields" />
-
-                        <partial name="_CardAcoes" model="(f.Id, false)" />
-                    </div>
-                </div>
-            </div>
+            <partial name="_Card" model="(f.DisplayField(vm => vm.Id.ToShortString(), f.Nome), campos, f.Id, true)" />
         }
     </div>
 }
