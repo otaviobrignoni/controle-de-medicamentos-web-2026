@@ -1,6 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Apresentacao;
 

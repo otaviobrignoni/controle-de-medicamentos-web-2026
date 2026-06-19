@@ -4,23 +4,16 @@ using FluentResults;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 
-public class ServicoFornecedor
+public class ServicoFornecedor(IRepositorioFornecedor repositorioFornecedor, IMapper mapeador)
 {
-    private readonly IRepositorioFornecedor repositorioFornecedor;
-
-    public ServicoFornecedor(IRepositorioFornecedor repositorioFornecedor, IMapper mapeador)
-    {
-        this.repositorioFornecedor = repositorioFornecedor;
-    }
-
     public Result Cadastrar(FornecedorDto dto)
     {
         if (repositorioFornecedor.Registros.Any(f => string.Equals(f.CNPJ, dto.CNPJ)))
             return Falha("CNPJ", "Já existe um Fornecedor com esse CNPJ");
 
-        Fornecedor novoForncedor = new(dto.Nome, dto.Telefone, dto.CNPJ);
+        var fornecedor = mapeador.Map<Fornecedor>(dto);
 
-        repositorioFornecedor.Cadastrar(novoForncedor);
+        repositorioFornecedor.Cadastrar(fornecedor);
 
         return Result.Ok();
     }
@@ -30,7 +23,7 @@ public class ServicoFornecedor
         if (repositorioFornecedor.Selecionar(f => f.Id != dto.Id).Any(f => string.Equals(f.CNPJ, dto.CNPJ)))
             return Falha("CNPJ", "Já existe um Fornecedor com esse CNPJ");
 
-        Fornecedor fornecedorEditado = new(dto.Nome, dto.Telefone, dto.CNPJ);
+        var fornecedorEditado = mapeador.Map<Fornecedor>(dto);
 
         bool conseguiuEditar = repositorioFornecedor.Editar(dto.Id, fornecedorEditado);
 
@@ -55,7 +48,7 @@ public class ServicoFornecedor
 
     public List<FornecedorDto> SelecionarTodos()
     {
-        return repositorioFornecedor.Selecionar().Select(f => new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Medicamentos.Count, f.Id)).ToList();
+        return mapeador.Map<List<FornecedorDto>>(repositorioFornecedor.Selecionar());
     }
 
     public Result<FornecedorDto> SelecionarPorId(Guid id)
@@ -65,7 +58,7 @@ public class ServicoFornecedor
         if (f is null)
             return Result.Fail("Fornecedor não encontrado");
 
-        return Result.Ok(new FornecedorDto(f.Nome, f.Telefone, f.CNPJ, f.Medicamentos.Count, f.Id));
+        return Result.Ok(mapeador.Map<FornecedorDto>(f));
     }
 
     private static Result Falha(string campo, string mensagem)
