@@ -1,18 +1,18 @@
+using ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
+using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
+using ControleDeMedicamentos.WebApp.ModuloEstoque.Infra;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Infra;
+using ControleDeMedicamentos.WebApp.ModuloFuncionario.Aplicacao;
+using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
+using ControleDeMedicamentos.WebApp.ModuloFuncionario.Infra;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Infra;
 using ControleDeMedicamentos.WebApp.ModuloPaciente.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloPaciente.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloPaciente.Infra;
-using ControleDeMedicamentos.WebApp.ModuloFuncionario.Aplicacao;
-using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
-using ControleDeMedicamentos.WebApp.ModuloFuncionario.Infra;
-using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
-using ControleDeMedicamentos.WebApp.ModuloEstoque.Infra;
-using ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 
 namespace ControleDeMedicamentos.WebApp.Compartilhado;
 
@@ -51,6 +51,9 @@ public static class InjecaoDependencia
 
             return contextoJson;
         });
+
+        services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
+
         //services.AddScoped<IRepositorio(*), Repositorio(*)>();
         services.AddScoped<IRepositorioFornecedor, RepositorioFornecedor>();
         services.AddScoped<IRepositorioPaciente, RepositorioPaciente>();
