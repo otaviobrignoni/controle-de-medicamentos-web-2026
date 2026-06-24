@@ -4,7 +4,7 @@ namespace ControleDeMedicamentos.WebApp.Compartilhado;
 
 public class SqlConnectionFactory(IConfiguration config) : ISqlConnectionFactory
 {
-    private const string NomeConnectionString = "ControleDeMedicamentoWeb";
+    private const string NomeConnectionString = "ControleDeMedicamentosWeb";
 
     public SqlConnection CreateConnection()
     {
