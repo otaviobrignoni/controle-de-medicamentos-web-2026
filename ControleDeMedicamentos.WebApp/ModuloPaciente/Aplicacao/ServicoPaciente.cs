@@ -8,8 +8,8 @@ public class ServicoPaciente(IRepositorioPaciente repositorioPaciente, IMapper m
 {
     public Result Cadastrar(PacienteDto dto)
     {
-        if (repositorioPaciente.Registros.Any(f => string.Equals(f.CartaoSUS, dto.CartaoSUS)))
-            return Falha("CartaoSUS", "Já existe um Paciente com esse cartaoSUS");
+        if (repositorioPaciente.Registros.Any(f => string.Equals(f.CartaoSus, dto.CartaoSUS)))
+            return Falha("CartaoSUS", "Já existe um paciente com esse cartão SUS.");
 
         Paciente novoPaciente = mapeador.Map<Paciente>(dto);
 
@@ -20,8 +20,8 @@ public class ServicoPaciente(IRepositorioPaciente repositorioPaciente, IMapper m
 
     public Result Editar(PacienteDto dto)
     {
-        if (repositorioPaciente.Selecionar(f => f.Id != dto.Id).Any(f => string.Equals(f.CartaoSUS, dto.CartaoSUS)))
-            return Falha("CartaoSUS", "Já existe um Paciente com esse cartaoSUS");
+        if (repositorioPaciente.Selecionar(f => f.Id != dto.Id).Any(f => string.Equals(f.CartaoSus, dto.CartaoSUS)))
+            return Falha("CartaoSUS", "Já existe um paciente com esse cartão SUS.");
 
         Paciente pacienteEditado = mapeador.Map<Paciente>(dto);
 
@@ -35,31 +35,35 @@ public class ServicoPaciente(IRepositorioPaciente repositorioPaciente, IMapper m
 
     public Result Excluir(Guid id)
     {
-        bool conseguiuExcluir = repositorioPaciente.Excluir(id);
+        var paciente = repositorioPaciente.Selecionar(id);
 
-        if (!conseguiuExcluir)
+        if (paciente is null)
             return Result.Fail("Paciente não encontrado");
+
+        repositorioPaciente.Excluir(id);
 
         return Result.Ok();
     }
 
-    public List<PacienteDto> SelecionarTodos()
+    public List<PacienteDto> Selecionar()
     {
-        return mapeador.Map<List<PacienteDto>>(repositorioPaciente.Selecionar());
+        return mapeador.Map<List<PacienteDto>>(repositorioPaciente.Registros);
     }
 
-    public Result<PacienteDto> SelecionarPorId(Guid id)
+    public Result<PacienteDto> Selecionar(Guid id)
     {
-        Paciente? p = repositorioPaciente.Selecionar(id);
+        var paciente = repositorioPaciente.Selecionar(id);
 
-        if (p is null)
+        if (paciente is null)
             return Result.Fail("Paciente não encontrado");
 
-        return Result.Ok(mapeador.Map<PacienteDto>(p));
+        return Result.Ok(mapeador.Map<PacienteDto>(paciente));
     }
 
     private static Result Falha(string campo, string mensagem)
     {
-        return Result.Fail(new Error(mensagem).WithMetadata("Campo", campo));
+        IError erro = new Error(mensagem).WithMetadata("Campo", campo);
+
+        return Result.Fail(erro);
     }
 }

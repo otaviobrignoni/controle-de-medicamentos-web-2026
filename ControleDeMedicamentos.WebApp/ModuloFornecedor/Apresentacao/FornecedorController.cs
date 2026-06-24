@@ -11,7 +11,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Listar()
     {
-        var dtos = servicoFornecedor.SelecionarTodos();
+        var dtos = servicoFornecedor.Selecionar();
 
         var ListarVms = mapeador.Map<List<FornecedorViewModel>>(dtos);
 
@@ -21,7 +21,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        FornecedorViewModel vm = new(string.Empty, string.Empty, string.Empty, 0);
+        FornecedorViewModel vm = new(string.Empty, string.Empty, string.Empty);
 
         return View(vm);
     }
@@ -50,7 +50,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Editar(Guid id)
     {
-        var resultado = servicoFornecedor.SelecionarPorId(id);
+        var resultado = servicoFornecedor.Selecionar(id);
 
         if (resultado.IsFailed)
         {
@@ -89,7 +89,7 @@ public class FornecedorController(ServicoFornecedor servicoFornecedor, IMapper m
     [HttpGet]
     public ActionResult Excluir(Guid id)
     {
-        var resultado = servicoFornecedor.SelecionarPorId(id);
+        var resultado = servicoFornecedor.Selecionar(id);
 
         if (resultado.IsFailed)
         {

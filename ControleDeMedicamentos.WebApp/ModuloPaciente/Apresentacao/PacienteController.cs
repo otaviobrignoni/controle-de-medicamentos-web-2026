@@ -11,7 +11,7 @@ public class PacienteController(ServicoPaciente servicoPaciente, IMapper mapeado
     [HttpGet]
     public ActionResult Listar()
     {
-        var dtos = servicoPaciente.SelecionarTodos();
+        var dtos = servicoPaciente.Selecionar();
 
         var ListarVms = mapeador.Map<List<PacienteViewModel>>(dtos);
 
@@ -49,7 +49,7 @@ public class PacienteController(ServicoPaciente servicoPaciente, IMapper mapeado
     [HttpGet]
     public ActionResult Editar(Guid id)
     {
-        var resultado = servicoPaciente.SelecionarPorId(id);
+        var resultado = servicoPaciente.Selecionar(id);
 
         if (resultado.IsFailed)
         {
@@ -88,7 +88,7 @@ public class PacienteController(ServicoPaciente servicoPaciente, IMapper mapeado
     [HttpGet]
     public ActionResult Excluir(Guid id)
     {
-        var resultado = servicoPaciente.SelecionarPorId(id);
+        var resultado = servicoPaciente.Selecionar(id);
 
         if (resultado.IsFailed)
         {

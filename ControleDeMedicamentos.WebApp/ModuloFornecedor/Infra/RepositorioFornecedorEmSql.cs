@@ -15,12 +15,12 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
 
         conexao.Open();
 
-        string InserirSql = """
+        string sqlQuery = """
             INSERT INTO dbo.TBFornecedor (Id, Nome, Telefone, Cnpj)
             VALUES (@Id, @Nome, @Telefone, @Cnpj);
         """;
 
-        conexao.Execute(InserirSql, registro);
+        conexao.Execute(sqlQuery, registro);
     }
 
     public bool Editar(Guid id, Fornecedor registroEditado)
@@ -41,7 +41,7 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
 
         registroEditado.Id = registro.Id;
 
-        string AtualizarSql = """
+        string sqlQuery = """
             UPDATE dbo.TBFornecedor
             SET
                 Nome = @Nome,
@@ -50,7 +50,7 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
             WHERE Id = @Id;
         """;
 
-        return conexao.Execute(AtualizarSql, registroEditado) == 1;
+        return conexao.Execute(sqlQuery, registroEditado) == 1;
     }
 
     public bool Excluir(Guid id)
@@ -69,12 +69,12 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
 
         conexao.Open();
 
-        string ExcluirSql = """
+        string sqlQuery = """
             DELETE FROM dbo.TBFornecedor
             WHERE Id = @Id;
         """;
 
-        return conexao.Execute(ExcluirSql, new { registro.Id }) == 1;
+        return conexao.Execute(sqlQuery, new { registro.Id }) == 1;
 
     }
 
@@ -84,13 +84,13 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
 
         conexao.Open();
 
-        string SelecionarPorIdSql = """
+        string sqlQuery = """
             SELECT Id, Nome, Telefone, Cnpj
             FROM dbo.TBFornecedor
             WHERE Id = @Id;
         """;
 
-        return conexao.QuerySingleOrDefault<Fornecedor>(SelecionarPorIdSql, new { Id = id });
+        return conexao.QuerySingleOrDefault<Fornecedor>(sqlQuery, new { Id = id });
     }
 
     public List<Fornecedor> Selecionar(Func<Fornecedor, bool>? filtro = null)
@@ -99,12 +99,12 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
 
         conexao.Open();
 
-        string SelecionarTodosSql = """
+        string sqlQuery = """
             SELECT Id, Nome, Telefone, Cnpj
             FROM dbo.TBFornecedor
             ORDER BY Nome;
         """;
 
-        return conexao.Query<Fornecedor>(SelecionarTodosSql).Where(filtro ?? (_ => true)).ToList();
+        return conexao.Query<Fornecedor>(sqlQuery).Where(filtro ?? (_ => true)).ToList();
     }
 }

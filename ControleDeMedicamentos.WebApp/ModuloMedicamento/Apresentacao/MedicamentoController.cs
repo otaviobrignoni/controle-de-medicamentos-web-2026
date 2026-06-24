@@ -13,7 +13,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
     [HttpGet]
     public ActionResult Listar()
     {
-        var dtos = servicoMedicamento.SelecionarTodosListagem();
+        var dtos = servicoMedicamento.Selecionar();
 
         var listarVms = mapeador.Map<List<MedicamentoMostrarViewModel>>(dtos);
 
@@ -50,7 +50,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
     [HttpGet]
     public ActionResult Editar(Guid id)
     {
-        var resultado = servicoMedicamento.SelecionarPorId(id);
+        var resultado = servicoMedicamento.Selecionar<MedicamentoDto>(id);
 
         if (resultado.IsFailed)
         {
@@ -85,7 +85,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
     [HttpGet]
     public ActionResult Excluir(Guid id)
     {
-        var resultado = servicoMedicamento.SelecionarMostrar(id);
+        var resultado = servicoMedicamento.Selecionar<MostrarMedicamentoDto>(id);
 
         if (resultado.IsFailed)
         {
@@ -117,7 +117,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
     [HttpGet]
     public ActionResult Detalhes(Guid id)
     {
-        var resultado = servicoMedicamento.SelecionarMostrar(id);
+        var resultado = servicoMedicamento.Selecionar<MostrarMedicamentoDto>(id);
 
         if (resultado.IsFailed)
         {
@@ -131,7 +131,7 @@ public class MedicamentoController(ServicoMedicamento servicoMedicamento, Servic
     }
     public List<SelectListItem> ObterFornecedores()
     {
-        var dtos = servicoFornecedor.SelecionarTodos();
+        var dtos = servicoFornecedor.Selecionar();
 
         return mapeador.Map<List<SelectListItem>>(dtos);
     }

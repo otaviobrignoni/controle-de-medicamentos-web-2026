@@ -36,7 +36,7 @@ public class ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario, 
         var funcionario = repositorioFuncionario.Selecionar(id);
 
         if (funcionario is null)
-            return Result.Fail("Funcionario não encontrado");
+            return Result.Fail("Funcionario não encontrado.");
 
         repositorioFuncionario.Excluir(id);
 
@@ -53,7 +53,7 @@ public class ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario, 
         var funcionario = repositorioFuncionario.Selecionar(id);
 
         if (funcionario is null)
-            return Result.Fail("Funcionario não encontrado");
+            return Result.Fail("Funcionario não encontrado.");
 
         return Result.Ok(mapeador.Map<FuncionarioDto>(funcionario));
     }

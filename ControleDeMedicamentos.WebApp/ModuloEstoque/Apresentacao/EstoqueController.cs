@@ -85,14 +85,14 @@ public class EstoqueController(ServicoEstoque servicoEstoque, ServicoMedicamento
 
     private List<SelectListItem> SelecionarMedicamentos()
     {
-        var dtos = servicoMedicamento.SelecionarTodosListagem();
+        var dtos = servicoMedicamento.Selecionar();
 
         return mapeador.Map<List<SelectListItem>>(dtos);
     }
 
     private List<SelectListItem> SelecionarPacientes()
     {
-        var dtos = servicoPaciente.SelecionarTodos();
+        var dtos = servicoPaciente.Selecionar();
 
         return mapeador.Map<List<SelectListItem>>(dtos);
     }

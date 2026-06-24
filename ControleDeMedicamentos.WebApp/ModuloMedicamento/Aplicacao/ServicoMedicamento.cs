@@ -11,17 +11,17 @@ public class ServicoMedicamento(IRepositorioFornecedor repositorioFornecedor, IR
     public Result Cadastrar(MedicamentoDto dto)
     {
         if (repositorioMedicamento.Registros.Any(f => string.Equals(f.Nome, dto.Nome)))
-            return Falha("Nome", "Esse medicamento já existe no programa");
+            return Falha("Nome", "Já existe um medicamento com esse nome.");
 
-        Fornecedor? fornecedor = repositorioFornecedor.Selecionar(dto.FornecedorId);
+        var fornecedor = repositorioFornecedor.Selecionar(dto.FornecedorId);
 
         if (fornecedor is null)
             return Falha("Fornecedor", "O \"Fornecedor\" e possivelmente nulo");
 
-        Medicamento novoMedicamento = mapeador.MapWith<Medicamento>(dto, ("fornecedor", fornecedor));
-        fornecedor.AdicionarMedicamento(novoMedicamento);
+        var medicamento = mapeador.MapWith<Medicamento>(dto, ("fornecedor", fornecedor));
+        fornecedor.AdicionarMedicamento(medicamento);
 
-        repositorioMedicamento.Cadastrar(novoMedicamento);
+        repositorioMedicamento.Cadastrar(medicamento);
 
         return Result.Ok();
     }
@@ -29,19 +29,19 @@ public class ServicoMedicamento(IRepositorioFornecedor repositorioFornecedor, IR
     public Result Editar(MedicamentoDto dto)
     {
         if (repositorioMedicamento.Selecionar(m => m.Id != dto.Id).Any(f => string.Equals(f.Nome, dto.Nome)))
-            return Falha("Nome", "Já existe um medicamento com esse nome");
+            return Falha("Nome", "Já existe um medicamento com esse nome.");
 
-        Fornecedor? fornecedor = repositorioFornecedor.Selecionar(dto.FornecedorId);
+        var fornecedor = repositorioFornecedor.Selecionar(dto.FornecedorId);
 
         if (fornecedor is null)
-            return Falha("Fornecedor", "O \"Fornecedor\" e possivelmente nulo");
+            return Falha("Fornecedor", "Fornecedor não encontrado.");
 
-        Medicamento medicamentoEditado = mapeador.MapWith<Medicamento>(dto, ("fornecedor", fornecedor));
+        var medicamentoEditado = mapeador.MapWith<Medicamento>(dto, ("fornecedor", fornecedor));
 
         bool conseguiuEditar = repositorioMedicamento.Editar(dto.Id, medicamentoEditado);
 
         if (!conseguiuEditar)
-            return Result.Fail("Ocorreu um erro ao Medicamento ao ser editado");
+            return Result.Fail("Medicamento não encontrado.");
 
         return Result.Ok();
     }
@@ -51,7 +51,7 @@ public class ServicoMedicamento(IRepositorioFornecedor repositorioFornecedor, IR
         Medicamento? medicamento = repositorioMedicamento.Selecionar(id);
 
         if (medicamento is null)
-            return Result.Fail("O medicamento não foi encontrado");
+            return Result.Fail("Medicamento não encontrado.");
 
         medicamento.Fornecedor.RemoverMedicamento(medicamento);
 
@@ -60,32 +60,24 @@ public class ServicoMedicamento(IRepositorioFornecedor repositorioFornecedor, IR
         return Result.Ok();
     }
 
-    public List<MostrarMedicamentoDto> SelecionarTodosListagem()
+    public List<MostrarMedicamentoDto> Selecionar()
     {
-        return repositorioMedicamento.Registros.Select(mapeador.Map<MostrarMedicamentoDto>).ToList();
+        return mapeador.Map<List<MostrarMedicamentoDto>>(repositorioMedicamento.Registros);
     }
-    public Result<MedicamentoDto> SelecionarPorId(Guid id)
+    public Result<TDto> Selecionar<TDto>(Guid id) where TDto : MedicamentoDtoBase<TDto>
     {
-        Medicamento? m = repositorioMedicamento.Selecionar(id);
+        Medicamento? medicamento = repositorioMedicamento.Selecionar(id);
 
-        if (m is null)
-            return Result.Fail("O medicamento possivelmente e nulo");
+        if (medicamento is null)
+            return Result.Fail("Medicamento não encontrado.");
 
-        return Result.Ok(mapeador.Map<MedicamentoDto>(m));
+        return Result.Ok(mapeador.Map<TDto>(medicamento));
     }
 
-    public Result<MostrarMedicamentoDto> SelecionarMostrar(Guid id)
-    {
-        Medicamento? m = repositorioMedicamento.Selecionar(id);
-
-        if (m is null)
-            return Result.Fail("O medicamento possivelmente e nulo");
-
-        return Result.Ok(mapeador.Map<MostrarMedicamentoDto>(m));
-    }
-    
     private static Result Falha(string campo, string mensagem)
     {
-        return Result.Fail(new Error(mensagem).WithMetadata("Campo", campo));
+        IError erro = new Error(mensagem).WithMetadata("Campo", campo);
+
+        return Result.Fail(erro);
     }
 }

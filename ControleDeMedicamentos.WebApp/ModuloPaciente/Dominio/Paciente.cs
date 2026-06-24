@@ -6,30 +6,24 @@ public class Paciente : EntidadeBase<Paciente>
 {
     public string Nome { get; set; } = string.Empty;
     public string Telefone { get; set; } = string.Empty;
-    public string CartaoSUS { get; set; } = string.Empty;
-    public string CPF { get; set; } = string.Empty;
+    public string CartaoSus { get; set; } = string.Empty;
+    public string Cpf { get; set; } = string.Empty;
 
     public Paciente()
     {
     }
-    public Paciente
-    (
-        string nome,
-        string telefone,
-        string cartaoSUS,
-        string CPF
-    )
+    public Paciente(string nome, string telefone, string cartaoSus, string cpf)
     {
         Nome = nome;
         Telefone = telefone;
-        CartaoSUS = cartaoSUS;
-        this.CPF = CPF;
+        CartaoSus = cartaoSus;
+        Cpf = cpf;
     }
     public override void Atualizar(Paciente entidadeAtualizada)
     {
         Nome = entidadeAtualizada.Nome;
         Telefone = entidadeAtualizada.Telefone;
-        CartaoSUS = entidadeAtualizada.CartaoSUS;
-        CPF = entidadeAtualizada.CPF;
+        CartaoSus = entidadeAtualizada.CartaoSus;
+        Cpf = entidadeAtualizada.Cpf;
     }
 }
