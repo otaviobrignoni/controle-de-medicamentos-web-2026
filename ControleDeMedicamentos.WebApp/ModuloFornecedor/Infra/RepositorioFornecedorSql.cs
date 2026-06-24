@@ -5,7 +5,7 @@ using Microsoft.Data.SqlClient;
 
 namespace ControleDeMedicamentos.WebApp.ModuloFornecedor.Infra;
 
-public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionFactory) : IRepositorioFornecedor
+public sealed class RepositorioFornecedorSql(ISqlConnectionFactory connectionFactory) : IRepositorioFornecedor
 {
     public List<Fornecedor> Registros => Selecionar();
 
@@ -32,12 +32,12 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
 
     public bool Editar(Fornecedor? registro, Fornecedor registroEditado)
     {
+        if (registro is null)
+            return false;
+
         using SqlConnection conexao = connectionFactory.CreateConnection();
 
         conexao.Open();
-
-        if (registro is null)
-            return false;
 
         registroEditado.Id = registro.Id;
 
@@ -62,10 +62,10 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
 
     public bool Excluir(Fornecedor? registro)
     {
-        using SqlConnection conexao = connectionFactory.CreateConnection();
-
         if (registro is null)
             return false;
+
+        using SqlConnection conexao = connectionFactory.CreateConnection();
 
         conexao.Open();
 
@@ -75,7 +75,6 @@ public sealed class RepositorioFornecedorEmSql(ISqlConnectionFactory connectionF
         """;
 
         return conexao.Execute(sqlQuery, new { registro.Id }) == 1;
-
     }
 
     public Fornecedor? Selecionar(Guid id)
