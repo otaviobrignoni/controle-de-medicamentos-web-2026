@@ -21,9 +21,4 @@ public class RepositorioRequisicao : RepositorioBase<Requisicao>, IRepositorioRe
 
         return filtro is null ? registros : registros.Where(filtro).ToList();
     }
-
-    public T? Selecionar<T>(Guid id) where T : Requisicao
-    {
-        return Registros.OfType<T>().FirstOrDefault(e => e.Id == id);
-    }
 }
