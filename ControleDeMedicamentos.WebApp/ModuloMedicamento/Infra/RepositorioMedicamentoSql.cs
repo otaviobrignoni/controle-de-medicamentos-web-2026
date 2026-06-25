@@ -18,11 +18,11 @@ public sealed class RepositorioMedicamentoSql(ISqlConnectionFactory connectionFa
         conexao.Open();
 
         string sqlQuery = """
-            INSERT INTO dbo.TBMedicamento (Id, Nome, Descricao, FornecedorId)
-            VALUES (@Id, @Nome, @Descricao, @FornecedorId);
+            INSERT INTO dbo.TBMedicamento (Id, Nome, Descricao, Quantidade, FornecedorId)
+            VALUES (@Id, @Nome, @Descricao, @Quantidade, @FornecedorId);
         """;
 
-        var obj = new { registro.Id, registro.Nome, registro.Descricao, FornecedorId = registro.Fornecedor.Id };
+        var obj = new { registro.Id, registro.Nome, registro.Descricao, registro.Quantidade, FornecedorId = registro.Fornecedor.Id };
 
         conexao.Execute(sqlQuery, obj);
     }
@@ -92,6 +92,7 @@ public sealed class RepositorioMedicamentoSql(ISqlConnectionFactory connectionFa
                 m.Id AS MedicamentoId,
                 m.Nome AS MedicamentoNome,
                 m.Descricao AS MedicamentoDescricao,
+                m.Quantidade AS MedicamentoQuantidade,
                 f.Id AS FornecedorId,
                 f.Nome AS FornecedorNome,
                 f.Telefone AS FornecedorTelefone,
@@ -121,6 +122,7 @@ public sealed class RepositorioMedicamentoSql(ISqlConnectionFactory connectionFa
                 m.Id AS MedicamentoId,
                 m.Nome AS MedicamentoNome,
                 m.Descricao AS MedicamentoDescricao,
+                m.Quantidade AS MedicamentoQuantidade,
                 f.Id AS FornecedorId,
                 f.Nome AS FornecedorNome,
                 f.Telefone AS FornecedorTelefone,
@@ -139,6 +141,7 @@ public sealed class MedicamentoRow
     public Guid MedicamentoId { get; set; }
     public string MedicamentoNome { get; set; } = string.Empty;
     public string MedicamentoDescricao { get; set; } = string.Empty;
+    public int MedicamentoQuantidade { get; set; }
     public Guid FornecedorId { get; set; }
     public string FornecedorNome { get; set; } = string.Empty;
     public string FornecedorTelefone { get; set; } = string.Empty;
@@ -158,6 +161,7 @@ public class MedicamentoSqlProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.MedicamentoId))
             .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.MedicamentoNome))
             .ForMember(dest => dest.Descricao, opt => opt.MapFrom(src => src.MedicamentoDescricao))
+            .ForMember(dest => dest.Quantidade, opt => opt.MapFrom(src => src.MedicamentoQuantidade))
             .ForMember(dest => dest.Fornecedor, opt => opt.MapFrom(src => src.ExtrairFornecedor()));
     }
 }

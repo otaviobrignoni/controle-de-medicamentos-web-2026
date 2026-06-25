@@ -47,6 +47,14 @@ public sealed class RepositorioRequisicaoSql(ISqlConnectionFactory connectionFac
                 var objEntrada = new { requisicaoEntrada.Id, FuncionarioId = requisicaoEntrada.Funcionario.Id, MedicamentoId = requisicaoEntrada.Medicamento.Id, requisicaoEntrada.Quantidade };
 
                 conexao.Execute(sqlQueryEntrada, objEntrada, transacao);
+
+                string sqlQueryAtualizarEstoqueEntrada = """
+                    UPDATE dbo.TBMedicamento
+                    SET Quantidade = Quantidade + @Quantidade
+                    WHERE Id = @MedicamentoId;
+                """;
+
+                conexao.Execute(sqlQueryAtualizarEstoqueEntrada, objEntrada, transacao);
             }
             else if (registro is RequisicaoSaida requisicaoSaida)
             {
@@ -69,6 +77,14 @@ public sealed class RepositorioRequisicaoSql(ISqlConnectionFactory connectionFac
                     var objItem = new { RequisicaoSaidaId = requisicaoSaida.Id, MedicamentoId = item.Medicamento.Id, item.Quantidade };
 
                     conexao.Execute(sqlQueryItem, objItem, transacao);
+
+                    string sqlQueryAtualizarEstoqueSaida = """
+                        UPDATE dbo.TBMedicamento
+                        SET Quantidade = Quantidade - @Quantidade
+                        WHERE Id = @MedicamentoId;
+                    """;
+
+                    conexao.Execute(sqlQueryAtualizarEstoqueSaida, objItem, transacao);
                 }
             }
             transacao.Commit();
