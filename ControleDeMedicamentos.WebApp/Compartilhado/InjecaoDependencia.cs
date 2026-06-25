@@ -59,7 +59,7 @@ public static class InjecaoDependencia
         services.AddScoped<IRepositorioPaciente, RepositorioPacienteSql>();
         services.AddScoped<IRepositorioMedicamento, RepositorioMedicamentoSql>();
         services.AddScoped<IRepositorioFuncionario, RepositorioFuncionarioSql>();
-        services.AddScoped<IRepositorioRequisicao, RepositorioRequisicao>();
+        services.AddScoped<IRepositorioRequisicao, RepositorioRequisicaoSql>();
     }
 
     // Camada de Aplicação
