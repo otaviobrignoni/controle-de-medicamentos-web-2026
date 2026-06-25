@@ -7,7 +7,7 @@ using Microsoft.Data.SqlClient;
 
 namespace ControleDeMedicamentos.WebApp.ModuloMedicamento.Infra;
 
-public class RepositorioMedicamentoSql(ISqlConnectionFactory connectionFactory, IMapper mapeador) : IRepositorioMedicamento
+public sealed class RepositorioMedicamentoSql(ISqlConnectionFactory connectionFactory, IMapper mapeador) : IRepositorioMedicamento
 {
     public List<Medicamento> Registros => Selecionar();
 
