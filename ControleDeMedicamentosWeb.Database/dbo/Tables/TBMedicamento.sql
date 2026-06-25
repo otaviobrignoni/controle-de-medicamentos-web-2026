@@ -9,7 +9,3 @@ CREATE TABLE [dbo].[TBMedicamento] (
 );
 GO
 
-ALTER TABLE [dbo].[TBMedicamento]
-    ADD CONSTRAINT [FK_TBMedicamento_TBFornecedor] FOREIGN KEY ([FornecedorId]) REFERENCES [dbo].[TBFornecedor] ([Id]);
-GO
-
