@@ -1,4 +1,4 @@
-using ControleDeMedicamentos.WebApp.Compartilhado;
+using ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
 using ControleDeMedicamentos.WebApp.Compartilhado.ModuloBase;
 using ControleDeMedicamentos.WebApp.ModuloPaciente.Dominio;
 

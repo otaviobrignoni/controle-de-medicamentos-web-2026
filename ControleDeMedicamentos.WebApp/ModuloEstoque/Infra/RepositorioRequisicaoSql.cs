@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
-using ControleDeMedicamentos.WebApp.Compartilhado;
+using ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;

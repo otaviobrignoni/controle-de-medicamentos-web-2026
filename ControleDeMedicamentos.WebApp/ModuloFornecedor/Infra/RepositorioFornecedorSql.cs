@@ -1,4 +1,4 @@
-using ControleDeMedicamentos.WebApp.Compartilhado;
+using ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using Dapper;
 using Microsoft.Data.SqlClient;

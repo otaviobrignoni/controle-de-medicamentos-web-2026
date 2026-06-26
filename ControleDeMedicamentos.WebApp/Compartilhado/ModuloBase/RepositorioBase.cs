@@ -1,3 +1,5 @@
+using ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
+
 namespace ControleDeMedicamentos.WebApp.Compartilhado.ModuloBase;
 // Infraestrutura
 public abstract class RepositorioBase<T> where T : EntidadeBase<T>

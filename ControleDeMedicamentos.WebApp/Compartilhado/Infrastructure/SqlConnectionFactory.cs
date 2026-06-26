@@ -1,6 +1,6 @@
 using Microsoft.Data.SqlClient;
 
-namespace ControleDeMedicamentos.WebApp.Compartilhado;
+namespace ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
 
 public class SqlConnectionFactory(IConfiguration config) : ISqlConnectionFactory
 {

@@ -1,5 +1,5 @@
 using AutoMapper;
-using ControleDeMedicamentos.WebApp.Compartilhado;
+using ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
 using ControleDeMedicamentos.WebApp.ModuloFornecedor.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloMedicamento.Dominio;
 using Dapper;

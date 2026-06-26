@@ -6,7 +6,7 @@ using ControleDeMedicamentos.WebApp.ModuloPaciente.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloFuncionario.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 
-namespace ControleDeMedicamentos.WebApp.Compartilhado;
+namespace ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
 // Infraestrutura
 public class ContextoJson
 {
