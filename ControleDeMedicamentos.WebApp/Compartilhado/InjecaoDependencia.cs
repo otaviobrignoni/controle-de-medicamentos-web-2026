@@ -1,3 +1,5 @@
+using ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
+using ControleDeMedicamentos.WebApp.Compartilhado.Logging;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Infra;
@@ -63,8 +65,10 @@ public static class InjecaoDependencia
     }
 
     // Camada de Aplicação
-    public static void AddServicesConfig(this IServiceCollection services)
+    public static void AddServicesConfig(this IServiceCollection services, IConfiguration config, ILoggingBuilder logging)
     {
+        services.AddSerilogLogger(config, logging);
+
         //services.AddScoped<Servico(*)>();
         services.AddScoped<ServicoFornecedor>();
         services.AddScoped<ServicoPaciente>();

@@ -8,13 +8,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        if (builder.Environment.IsProduction())
-        {
-            builder.Configuration.AddUserSecrets<Program>();
-        }
-
         builder.Services.AddPresentationConfig();
-        builder.Services.AddServicesConfig();
+        builder.Services.AddServicesConfig(builder.Configuration, builder.Logging);
         builder.Services.AddRepositoriesConfig();
 
         var app = builder.Build();
