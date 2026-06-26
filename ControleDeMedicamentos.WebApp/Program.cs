@@ -8,7 +8,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddPresentationConfig();
+        builder.Services.AddPresentationConfig(builder.Configuration);
         builder.Services.AddServicesConfig(builder.Configuration, builder.Logging);
         builder.Services.AddRepositoriesConfig();
 

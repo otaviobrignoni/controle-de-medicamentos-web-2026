@@ -1,5 +1,6 @@
 using ControleDeMedicamentos.WebApp.Compartilhado.Infrastructure;
 using ControleDeMedicamentos.WebApp.Compartilhado.Logging;
+using ControleDeMedicamentos.WebApp.Compartilhado.Mapping;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Aplicacao;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Dominio;
 using ControleDeMedicamentos.WebApp.ModuloEstoque.Infra;
@@ -21,7 +22,7 @@ namespace ControleDeMedicamentos.WebApp.Compartilhado;
 public static class InjecaoDependencia
 {
     // Camada de Apresentação
-    public static void AddPresentationConfig(this IServiceCollection services)
+    public static void AddPresentationConfig(this IServiceCollection services, IConfiguration config)
     {
         services.AddControllersWithViews().AddRazorOptions(options =>
         {
@@ -36,9 +37,14 @@ public static class InjecaoDependencia
             options.ViewLocationFormats.Add("/Compartilhado/Views/{0}.cshtml");
         });
 
-        services.AddAutoMapper(config =>
+        services.AddAutoMapper(mapperCfg =>
         {
-            config.AddMaps(typeof(Program));
+            var opt = config.GetSection(AutoMapperOptions.SectionName).Get<AutoMapperOptions>();
+
+            if (!string.IsNullOrWhiteSpace(opt?.LicenseKey))
+                mapperCfg.LicenseKey = opt.LicenseKey;
+
+            mapperCfg.AddMaps(typeof(Program));
         });
     }
 
