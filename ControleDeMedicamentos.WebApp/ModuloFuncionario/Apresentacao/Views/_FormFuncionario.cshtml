@@ -1,9 +1,4 @@
 ﻿@model FuncionarioViewModel
 <partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.Nome, "text")" />
-<span asp-validation-for="@Model.Nome" class="text-danger small fw-semibold"></span>
-
 <partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.Telefone, "text")" />
-<span asp-validation-for="@Model.Telefone" class="text-danger small fw-semibold"></span>
-
 <partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.Cpf, "text", "CPF")" />
-<span asp-validation-for="@Model.Cpf" class="text-danger small fw-semibold"></span>

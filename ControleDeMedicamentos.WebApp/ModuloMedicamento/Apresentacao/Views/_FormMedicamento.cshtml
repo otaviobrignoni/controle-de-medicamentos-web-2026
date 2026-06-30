@@ -1,12 +1,5 @@
 @model MedicamentoViewModel
 <partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.Nome, "text")" />
-<span asp-validation-for="@Model.Nome" class="text-danger small fw-semibold"></span>
-
 <partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.Descricao, "text", "Descrição")" />
-<span asp-validation-for="@Model.Descricao" class="text-danger small fw-semibold"></span>
-
 <partial name="_FormCampo" model="@Model.ConvertToFormField(vm => vm.Quantidade, "number")" />
-<span asp-validation-for="Quantidade" class="text-danger small fw-semibold"></span>
-
 <partial name="_FormSelect" model="@Model.ConvertToFormSelect(vm => vm.FornecedorId, Model.Fornecedores ?? [], "Fornecedor", "Selecione um Fornecedor")" />
-<span asp-validation-for="FornecedorId" class="text-danger small fw-semibold"></span>
